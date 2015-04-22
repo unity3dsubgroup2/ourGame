@@ -6,7 +6,7 @@ public class MoveCamera : MonoBehaviour
 	
 	public float Smooth; // speed camera moving
 	
-	public Transform Player;
+	private Transform Player;
 	private Vector3 relPlayerPosition;
 	
 	private Vector3 camPosition;
@@ -25,13 +25,20 @@ public class MoveCamera : MonoBehaviour
 	void FixedUpdate ()
 	{
 		
-		print (Input.mousePosition);
+		//	print (Input.mousePosition);
 		
 		// smooth move cam to new position
+//		newCamPosition = Player.position + camPosition;
 		newCamPosition = Player.position + camPosition;
 		transform.position = Vector3.Lerp (transform.position, newCamPosition, Time.deltaTime * Smooth);
 
+
 		// rotate cam
+		/*
+		relPlayerPosition = Vector3.Scale (Player.forward, new Vector3 (1, 0, 1)).normalized;
+		Quaternion camRotation = Quaternion.LookRotation (relPlayerPosition, Player.forward);
+		transform.rotation = Quaternion.Lerp (transform.rotation, camRotation, Smooth * Time.deltaTime);
+		*/
 		/*
 		m_CamForward = Vector3.Scale(Player.forward, new Vector3(1, 0, 1)).normalized;
 
