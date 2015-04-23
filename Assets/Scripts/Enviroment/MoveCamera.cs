@@ -7,6 +7,7 @@ public class MoveCamera : MonoBehaviour
 	public float Smooth; // speed camera moving
 	
 	private Transform Player;
+	private Transform camContainer;
 	private Vector3 relPlayerPosition;
 	
 	private Vector3 camPosition;
@@ -17,9 +18,10 @@ public class MoveCamera : MonoBehaviour
 	void Start ()
 	{
 		Player = GameObject.FindGameObjectWithTag ("Player").transform;
+		camContainer = transform.parent.transform;
 		
 		// Setting camera position in scene
-		camPosition = transform.position - Player.position;
+		camPosition = transform.parent.transform.position - Player.position;
 	}
 	
 	void FixedUpdate ()
@@ -30,15 +32,15 @@ public class MoveCamera : MonoBehaviour
 		// smooth move cam to new position
 //		newCamPosition = Player.position + camPosition;
 		newCamPosition = Player.position + camPosition;
-		transform.position = Vector3.Lerp (transform.position, newCamPosition, Time.deltaTime * Smooth);
+		camContainer.position = Vector3.Lerp (camContainer.position, newCamPosition, Time.deltaTime * Smooth);
 
 
 		// rotate cam
-		/*
+		
 		relPlayerPosition = Vector3.Scale (Player.forward, new Vector3 (1, 0, 1)).normalized;
-		Quaternion camRotation = Quaternion.LookRotation (relPlayerPosition, Player.forward);
-		transform.rotation = Quaternion.Lerp (transform.rotation, camRotation, Smooth * Time.deltaTime);
-		*/
+		Quaternion camRotation = Quaternion.LookRotation (relPlayerPosition);
+		camContainer.rotation = Quaternion.Lerp (camContainer.rotation, camRotation, Smooth * Time.deltaTime);
+		
 		/*
 		m_CamForward = Vector3.Scale(Player.forward, new Vector3(1, 0, 1)).normalized;
 

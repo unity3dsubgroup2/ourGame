@@ -25,11 +25,11 @@ public class PlayerControl : MonoBehaviour
 	
 	void FixedUpdate ()
 	{
-		float v = Input.GetAxis ("Vertical");
-		float h = Input.GetAxis ("Horizontal");
+		float v = Input.GetAxis ("Vertical") * 0.5f;
+		float h = Input.GetAxis ("Horizontal") * 0.5f;
 		if (Input.GetKey (KeyCode.LeftShift)) {
-			v *= 0.5f;
-			h *= 0.5f;
+			v *= 2f;
+			h *= 2f;
 		}
 		myAnim.SetFloat ("Forward", v, 0.1f, Time.deltaTime);
 		myAnim.SetFloat ("Turn", h, 0.1f, Time.deltaTime);
