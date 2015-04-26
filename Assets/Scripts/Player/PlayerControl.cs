@@ -3,10 +3,11 @@ using System.Collections;
 
 public class PlayerControl : MonoBehaviour
 {
-
-	public float speed = 1f;
+	public GameObject bullet;
+	LineRenderer laser;
 
 	private Transform player;
+	public Transform rightHand;
 	private Animator myAnim;
 	private Rigidbody myRigidbody;
 
@@ -15,6 +16,7 @@ public class PlayerControl : MonoBehaviour
 	void Start ()
 	{
 		player = GameObject.FindGameObjectWithTag ("Player").transform;
+		laser = GetComponent<LineRenderer> ();
 		myAnim = GetComponent<Animator> ();
 		myRigidbody = GetComponent<Rigidbody> ();
 		myRigidbody.constraints = 
@@ -27,7 +29,7 @@ public class PlayerControl : MonoBehaviour
 	{
 		float v = Input.GetAxis ("Vertical") * 0.5f;
 		float h = Input.GetAxis ("Horizontal") * 0.5f;
-		if (Input.GetKey (KeyCode.LeftShift)) {
+		if (Input.GetKey (KeyCode.LeftShift)) { //run mode
 			v *= 2f;
 			h *= 2f;
 		}
@@ -38,6 +40,22 @@ public class PlayerControl : MonoBehaviour
 
 	void Update ()
 	{
+		if (Input.GetMouseButtonDown (0)) { //Shot
+			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+			RaycastHit hit;
+			if (Physics.Raycast (ray, out hit, 20f)) {
+				if (hit.collider.tag == "Enemy") {
+					laser.SetPosition (0, rightHand.position);
+					laser.SetPosition (1, hit.point);
 
+					GameObject shot = (GameObject)Instantiate (bullet, rightHand.position, Quaternion.identity);
+//					shot.GetComponent<Rigidbody> ().MovePosition (hit.point);
+//					shot.GetComponent<Rigidbody> ().AddForce (hit.point * 12f);
+					shot.GetComponent<Rigidbody> ().AddForce ((hit.point - shot.transform.position).normalized * 120f);
+//					shot.GetComponent<Rigidbody> ().MovePosition (hit.point);
+
+				}
+			}
+		}
 	}
 }
