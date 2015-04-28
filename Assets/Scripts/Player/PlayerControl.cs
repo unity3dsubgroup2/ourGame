@@ -4,7 +4,6 @@ using System.Collections;
 public class PlayerControl : MonoBehaviour
 {
 	public GameObject bullet;
-	LineRenderer laser;
 
 	private Transform player;
 	public Transform rightHand;
@@ -12,17 +11,18 @@ public class PlayerControl : MonoBehaviour
 	private Rigidbody myRigidbody;
 
 	bool isGrounded = true;
+	float shotTimer;
 
 	void Start ()
 	{
 		player = GameObject.FindGameObjectWithTag ("Player").transform;
-		laser = GetComponent<LineRenderer> ();
 		myAnim = GetComponent<Animator> ();
 		myRigidbody = GetComponent<Rigidbody> ();
 		myRigidbody.constraints = 
 			RigidbodyConstraints.FreezeRotationX |
 			RigidbodyConstraints.FreezeRotationY |
 			RigidbodyConstraints.FreezeRotationZ;
+		shotTimer = 0;
 	}
 	
 	void FixedUpdate ()
@@ -40,22 +40,32 @@ public class PlayerControl : MonoBehaviour
 
 	void Update ()
 	{
-		if (Input.GetMouseButtonDown (0)) { //Shot
+		if (Input.GetMouseButtonDown (0) && shotTimer > PlayerHealth.playerHealth.rateFire) { //Shot
 			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 			RaycastHit hit;
 			if (Physics.Raycast (ray, out hit, 20f)) {
 				if (hit.collider.tag == "Enemy") {
-					laser.SetPosition (0, rightHand.position);
-					laser.SetPosition (1, hit.point);
+					float angle = Vector3.Angle (transform.forward, (hit.transform.position - transform.position));
+					print ("angle=" + (angle).ToString ());
+					if (angle < 15f) {
+//						myAnim.SetFloat ("Turn", angle, 0.01f, Time.deltaTime);
+						GameObject shot = (GameObject)Instantiate (bullet, rightHand.position, Quaternion.identity);
+						shot.GetComponent<Rigidbody> ().AddForce ((hit.point - shot.transform.position).normalized * 1000f);
+						shotTimer = 0;
 
-					GameObject shot = (GameObject)Instantiate (bullet, rightHand.position, Quaternion.identity);
-//					shot.GetComponent<Rigidbody> ().MovePosition (hit.point);
-//					shot.GetComponent<Rigidbody> ().AddForce (hit.point * 12f);
-					shot.GetComponent<Rigidbody> ().AddForce ((hit.point - shot.transform.position).normalized * 120f);
-//					shot.GetComponent<Rigidbody> ().MovePosition (hit.point);
+					}
 
 				}
 			}
+		}
+		shotTimer += Time.deltaTime;
+
+		if (PlayerHealth.playerHealth.health <= 0) {
+			myAnim.SetBool ("EnemyInSight", false);
+			myAnim.SetBool ("Dead", true);
+		} else {
+			myAnim.SetBool ("EnemyInSight", true);
+			myAnim.SetBool ("Dead", false);
 		}
 	}
 }
