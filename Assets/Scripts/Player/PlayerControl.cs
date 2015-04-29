@@ -5,17 +5,17 @@ public class PlayerControl : MonoBehaviour
 {
 	public GameObject bullet;
 
-	private Transform player;
-	public Transform rightHand;
+//	private Transform player;
+	public Transform weapon;
 	private Animator myAnim;
 	private Rigidbody myRigidbody;
 
-	bool isGrounded = true;
+//	bool isGrounded = true;
 	float shotTimer;
 
 	void Start ()
 	{
-		player = GameObject.FindGameObjectWithTag ("Player").transform;
+//		player = GameObject.FindGameObjectWithTag ("Player").transform;
 		myAnim = GetComponent<Animator> ();
 		myRigidbody = GetComponent<Rigidbody> ();
 		myRigidbody.constraints = 
@@ -44,12 +44,13 @@ public class PlayerControl : MonoBehaviour
 			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 			RaycastHit hit;
 			if (Physics.Raycast (ray, out hit, 20f)) {
-				if (hit.collider.tag == "Enemy") {
+				if (hit.collider.tag == "Enemy" || hit.collider.tag == "Warrior") {
 					float angle = Vector3.Angle (transform.forward, (hit.transform.position - transform.position));
-					print ("angle=" + (angle).ToString ());
-					if (angle < 15f) {
+//					print ("angle=" + (angle).ToString ());
+					if (angle < 45f) {
 //						myAnim.SetFloat ("Turn", angle, 0.01f, Time.deltaTime);
-						GameObject shot = (GameObject)Instantiate (bullet, rightHand.position, Quaternion.identity);
+						GameObject shot = (GameObject)Instantiate (bullet, weapon.position, Quaternion.identity);
+						shot.GetComponent<Bullet> ().amount = PlayerHealth.playerHealth.damage;
 						shot.GetComponent<Rigidbody> ().AddForce ((hit.point - shot.transform.position).normalized * 1000f);
 						shotTimer = 0;
 
