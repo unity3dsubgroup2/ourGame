@@ -42,6 +42,13 @@ ModelImporter:
     4300008: Cocone_door_glass
     4300010: Cocone_door_frame
     4300012: Object026
+    6400000: Cocone
+    6400002: Cocone_door_frame
+    6400004: Cocone_door_glass
+    6400006: Cocone_door_inside
+    6400008: LightColumn
+    6400010: Object025
+    6400012: Object026
   materials:
     importMaterials: 1
     materialName: 0
@@ -63,7 +70,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
