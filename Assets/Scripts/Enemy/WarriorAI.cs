@@ -3,7 +3,6 @@ using System.Collections;
 
 public class WarriorAI : MonoBehaviour
 {
-	public Transform weapon;
 	public GameObject bullet;
 
 	private Transform player;
@@ -11,15 +10,18 @@ public class WarriorAI : MonoBehaviour
 	private NavMeshAgent navMeshAgent;
 	private Enemy myHealth;
 	private float speed;
-
+	private Transform weapon;
+	
 	private float shotTimer = 0;
 	
 	void Start ()
 	{
 		player = GameObject.FindGameObjectWithTag ("Player").transform;
+		weapon = transform.Find ("Weapon").transform;
 		myAnim = GetComponent<Animator> ();
 		navMeshAgent = GetComponent<NavMeshAgent> ();
 		myHealth = GetComponent<Enemy> ();
+
 	}
 	
 	// Update is called once per frame
@@ -29,7 +31,7 @@ public class WarriorAI : MonoBehaviour
 			navMeshAgent.speed = speed;
 		
 			float angle = Vector3.Angle (transform.forward, (player.position - transform.position));
-			if (angle < 10f) {
+			if (angle < 15f) {
 				if (shotTimer > myHealth.shotRate && myHealth.isAlive) {
 					myAnim.SetBool ("EnemyInSight", true);
 					Shot ();
@@ -59,8 +61,8 @@ public class WarriorAI : MonoBehaviour
 	void Shot ()
 	{
 		GameObject shot = (GameObject)Instantiate (bullet, weapon.position, Quaternion.identity);
-		shot.GetComponent<Bullet> ().amount = PlayerHealth.playerHealth.damage;
-		Vector3 playerBody = new Vector3 (player.position.x, player.position.y + 1f, player.position.z);
+		shot.GetComponent<Bullet> ().amount = myHealth.damage;
+		Vector3 playerBody = new Vector3 (player.position.x, player.position.y, player.position.z);
 		shot.GetComponent<Rigidbody> ().AddForce ((playerBody - shot.transform.position).normalized * 1000f);
 	}
 
