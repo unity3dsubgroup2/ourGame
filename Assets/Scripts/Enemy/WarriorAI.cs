@@ -24,7 +24,6 @@ public class WarriorAI : MonoBehaviour
 
 	}
 	
-	// Update is called once per frame
 	void Update ()
 	{
 		if (myHealth.isAlive) {
@@ -51,9 +50,6 @@ public class WarriorAI : MonoBehaviour
 
 	void OnAnimatorMove ()
 	{
-		//	Vector3 newPosition = transform.position;
-		//	newPosition.z += myAnim.GetFloat ("ForwardSpeed") * Time.deltaTime; 
-		//	transform.position = newPosition;
 		speed = myAnim.GetFloat ("ForwardSpeed");
 
 	}
@@ -62,6 +58,7 @@ public class WarriorAI : MonoBehaviour
 	{
 		GameObject shot = (GameObject)Instantiate (bullet, weapon.position, Quaternion.identity);
 		shot.GetComponent<Bullet> ().amount = myHealth.damage;
+		shot.GetComponent<Bullet> ().owner = gameObject;
 		Vector3 playerBody = new Vector3 (player.position.x, player.position.y, player.position.z);
 		shot.GetComponent<Rigidbody> ().AddForce ((playerBody - shot.transform.position).normalized * 1000f);
 	}

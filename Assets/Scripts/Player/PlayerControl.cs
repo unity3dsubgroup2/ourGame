@@ -26,11 +26,13 @@ public class PlayerControl : MonoBehaviour
 			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 			RaycastHit hit;
 			if (Physics.Raycast (ray, out hit, 20f)) {
-				GameObject shot = (GameObject)Instantiate (bullet, weapon.position, Quaternion.identity);
-				shot.GetComponent<Bullet> ().amount = PlayerHealth.playerHealth.damage;
-				shot.GetComponent<Rigidbody> ().AddForce ((hit.point - shot.transform.position).normalized * 1000f);
-				shotTimer = 0;
-
+				if (hit.collider.tag != "Building" && hit.collider.tag != "Player") {
+					GameObject shot = (GameObject)Instantiate (bullet, weapon.position, Quaternion.identity);
+					shot.GetComponent<Bullet> ().owner = gameObject;
+					shot.GetComponent<Bullet> ().amount = PlayerHealth.playerHealth.damage;
+					shot.GetComponent<Rigidbody> ().AddForce ((hit.point - shot.transform.position).normalized * 1000f);
+					shotTimer = 0;
+				}
 			}
 		}
 		shotTimer += Time.deltaTime;
