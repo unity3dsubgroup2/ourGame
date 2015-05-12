@@ -11,8 +11,10 @@ public class PlatforMovement : MonoBehaviour
 	private ParticleSystem pRight;*/
 	private Rigidbody myRigidbody;
 	private Transform turret;
+	private Transform weapon;
 	private Vector3 turretPos;
 	private Vector3 mousePos;
+	private LineRenderer lazer;
 
 	void Start ()
 	{
@@ -24,6 +26,8 @@ public class PlatforMovement : MonoBehaviour
 */
 		myRigidbody = GetComponent<Rigidbody> ();
 		turret = transform.Find ("Turret").transform;
+		weapon = transform.Find ("Turret/Weapon");
+		lazer = transform.Find ("Turret/Weapon").GetComponent<LineRenderer> ();
 	}
 
 	void FixedUpdate ()
@@ -38,5 +42,18 @@ public class PlatforMovement : MonoBehaviour
 		turretPos = new Vector3 (turretPos.x, 0f, turretPos.y);
 		mousePos = new Vector3 (Input.mousePosition.x, 0f, Input.mousePosition.y);
 		turret.rotation = Quaternion.LookRotation (mousePos - turretPos);
+
+		// draw lazer
+		lazer.materials [0].mainTextureOffset += new Vector2 (Time.deltaTime * 0.1f, 0.0f);
+		lazer.materials [0].SetTextureOffset ("_NoiseTex", new Vector2 (-Time.time, 0.0f));
+		RaycastHit hitInfo;
+		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+		if (Physics.Raycast (ray, out hitInfo, 20f)) {
+			if (hitInfo.collider.tag != "Enemy" && hitInfo.collider.tag != "Environment" && hitInfo.collider.tag != "Warrior") {
+				Physics.Raycast (weapon.transform.position, weapon.forward, out hitInfo);
+			}
+		}
+		lazer.SetPosition (0, weapon.position);
+		lazer.SetPosition (1, hitInfo.point);
 	}
 }
