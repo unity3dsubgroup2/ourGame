@@ -7,10 +7,12 @@ public class WarriorAI : MonoBehaviour
 
 	private Transform player;
 	private Animator myAnim;
+	private Transform jet;
 	private NavMeshAgent navMeshAgent;
 	private Enemy myHealth;
-	private float speed;
+	private float speed = 3f;
 	private Transform weapon;
+	private bool isActive = true;
 	
 	private float shotTimer = 0;
 	
@@ -21,37 +23,50 @@ public class WarriorAI : MonoBehaviour
 		myAnim = GetComponent<Animator> ();
 		navMeshAgent = GetComponent<NavMeshAgent> ();
 		myHealth = GetComponent<Enemy> ();
-
+		jet = transform.Find ("Jet");
 	}
 	
 	void Update ()
 	{
-		if (myHealth.isAlive) {
-			navMeshAgent.speed = speed;
+		if (isActive) {
+			if (myHealth.isAlive) {
+				navMeshAgent.speed = speed;
 		
-			float angle = Vector3.Angle (transform.forward, (player.position - transform.position));
-			if (angle < 15f) {
-				if (shotTimer > myHealth.shotRate && myHealth.isAlive) {
-					myAnim.SetBool ("EnemyInSight", true);
-					Shot ();
-					shotTimer = 0;
+				float angle = Vector3.Angle (transform.forward, (player.position - transform.position));
+				if (angle < 15f) {
+					if (shotTimer > myHealth.shotRate && myHealth.isAlive) {
+						if (myAnim != null) {
+							myAnim.SetBool ("EnemyInSight", true);
+						}
+						Shot ();
+						shotTimer = 0;
+					}
+				} else {
+					if (myAnim != null) {
+						myAnim.SetBool ("EnemyInSight", false);
+					}
 				}
+				shotTimer += Time.deltaTime;
+				if (myAnim != null) {
+					myAnim.SetFloat ("Forward", 0.5f, 0.1f, Time.deltaTime);
+				}
+				navMeshAgent.SetDestination (player.position);
 			} else {
-				myAnim.SetBool ("EnemyInSight", false);
+				isActive = false;
+				navMeshAgent.Stop ();
+				if (jet != null) {
+					jet.GetComponent<ParticleSystem> ().enableEmission = false;
+				}
+				if (myAnim != null) {
+					myAnim.SetBool ("EnemyInSight", false);
+				}
 			}
-			shotTimer += Time.deltaTime;
-			myAnim.SetFloat ("Forward", 0.5f, 0.1f, Time.deltaTime);
-			navMeshAgent.SetDestination (player.position);
-		} else {
-			navMeshAgent.Stop ();
-			myAnim.SetBool ("EnemyInSight", false);
 		}
 	}
 
 	void OnAnimatorMove ()
 	{
 		speed = myAnim.GetFloat ("ForwardSpeed");
-
 	}
 
 	void Shot ()
