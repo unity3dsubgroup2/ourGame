@@ -1,0 +1,107 @@
+fileFormatVersion: 2
+guid: f755f9d949adf45438c16e2f8de03d4b
+timeCreated: 1430747910
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: Cocone
+    100002: Cocone_door_frame
+    100004: Cocone_door_glass
+    100006: Cocone_door_inside
+    100008: LightColumn
+    100010: LightColumn001
+    100012: Object025
+    100014: //RootNode
+    100016: Object026
+    400000: Cocone
+    400002: Cocone_door_frame
+    400004: Cocone_door_glass
+    400006: Cocone_door_inside
+    400008: LightColumn
+    400010: LightColumn001
+    400012: Object025
+    400014: //RootNode
+    400016: Object026
+    2300000: Cocone
+    2300002: Cocone_door_frame
+    2300004: Cocone_door_glass
+    2300006: Cocone_door_inside
+    2300008: LightColumn
+    2300010: LightColumn001
+    2300012: Object025
+    2300014: Object026
+    3300000: Cocone
+    3300002: Cocone_door_frame
+    3300004: Cocone_door_glass
+    3300006: Cocone_door_inside
+    3300008: LightColumn
+    3300010: LightColumn001
+    3300012: Object025
+    3300014: Object026
+    4300000: Object025
+    4300002: Cocone
+    4300004: LightColumn
+    4300006: LightColumn001
+    4300008: Cocone_door_inside
+    4300010: Cocone_door_glass
+    4300012: Cocone_door_frame
+    4300014: Object026
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
