@@ -16,7 +16,7 @@ public class PlayerControl : MonoBehaviour
 	{
 //		player = GameObject.FindGameObjectWithTag ("Player").transform;
 		myAnim = GetComponent<Animator> ();
-		weapon = transform.Find ("Turret/Weapon").transform;
+		weapon = transform.Find ("Turret/Gun1/Weapon").transform;
 		shotTimer = 0;
 	}
 	

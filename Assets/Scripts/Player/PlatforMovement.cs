@@ -26,8 +26,8 @@ public class PlatforMovement : MonoBehaviour
 */
 		myRigidbody = GetComponent<Rigidbody> ();
 		turret = transform.Find ("Turret").transform;
-		weapon = transform.Find ("Turret/Weapon");
-		lazer = transform.Find ("Turret/Weapon").GetComponent<LineRenderer> ();
+		weapon = transform.Find ("Turret/Gun1/Weapon");
+		lazer = transform.Find ("Turret/Laser").GetComponent<LineRenderer> ();
 	}
 
 	void FixedUpdate ()
@@ -44,16 +44,18 @@ public class PlatforMovement : MonoBehaviour
 		turret.rotation = Quaternion.LookRotation (mousePos - turretPos);
 
 		// draw lazer
-		lazer.materials [0].mainTextureOffset += new Vector2 (Time.deltaTime * 0.1f, 0.0f);
-		lazer.materials [0].SetTextureOffset ("_NoiseTex", new Vector2 (-Time.time, 0.0f));
-		RaycastHit hitInfo;
-		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-		if (Physics.Raycast (ray, out hitInfo, 20f)) {
-			if (hitInfo.collider.tag != "Enemy" && hitInfo.collider.tag != "Environment" && hitInfo.collider.tag != "Warrior") {
-				Physics.Raycast (weapon.transform.position, weapon.forward, out hitInfo);
+		if (lazer != null) {
+			lazer.materials [0].mainTextureOffset += new Vector2 (Time.deltaTime * 0.1f, 0.0f);
+			lazer.materials [0].SetTextureOffset ("_NoiseTex", new Vector2 (-Time.time, 0.0f));
+			RaycastHit hitInfo;
+			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+			if (Physics.Raycast (ray, out hitInfo, 20f)) {
+				if (hitInfo.collider.tag != "Enemy" && hitInfo.collider.tag != "Environment" && hitInfo.collider.tag != "Warrior") {
+					Physics.Raycast (weapon.transform.position, weapon.forward, out hitInfo);
+				}
 			}
+			lazer.SetPosition (0, lazer.transform.position);
+			lazer.SetPosition (1, hitInfo.point);
 		}
-		lazer.SetPosition (0, weapon.position);
-		lazer.SetPosition (1, hitInfo.point);
 	}
 }
