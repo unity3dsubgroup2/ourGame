@@ -4,37 +4,35 @@ using System.Collections;
 public class PlayerControl : MonoBehaviour
 {
 	public GameObject bullet;
+	public bool isWeapon1Active = true;
+	public bool isWeapon2Active = true;
 
-//	private Transform player;
-	int layerMask = 1 << 2; // IgnoreRayCast
-	private Transform weapon;
-	private Animator myAnim;
+	private int layerMask;		// for Raycast ignoring
+	private Transform weapon1;
+	private Transform weapon2;
+	private float effectsTime = 0.1f;
 	private LineRenderer lazer;
 
-//	bool isGrounded = true;
-	float shotTimer;
+	private float shotTimer;
+	private int fireCount = 0;
+	private float rateFire;
+
 
 	void Start ()
 	{
-//		player = GameObject.FindGameObjectWithTag ("Player").transform;
-		layerMask = ~layerMask;
-		myAnim = GetComponent<Animator> ();
-		weapon = transform.Find ("Turret/Gun1/Weapon").transform;
+		layerMask = ~LayerMask.GetMask ("Ignore Raycast");
+		weapon1 = transform.Find ("Turret/Gun1/Weapon").transform;
+		weapon2 = transform.Find ("Turret/Gun2/Weapon").transform;
 		shotTimer = 0;
+		rateFire = PlayerHealth.playerHealth.rateFire;
 		lazer = transform.Find ("Turret/Laser").GetComponent<LineRenderer> ();
 	}
 	
 	void Update ()
 	{
 		RaycastHit hitInfo;
-		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-		Physics.Raycast (weapon.transform.position, weapon.forward, out hitInfo, Mathf.Infinity, layerMask);
-/*		if (Physics.Raycast (ray, out hitInfo, 20f)) {
-			if (hitInfo.collider.tag != "Enemy" && hitInfo.collider.tag != "Environment" && hitInfo.collider.tag != "Warrior") {
-				Physics.Raycast (weapon.transform.position, weapon.forward, out hitInfo);
-			}
-		}
-*/		// draw lazer
+		Physics.Raycast (weapon1.transform.position, weapon1.forward, out hitInfo, Mathf.Infinity, layerMask);
+		// draw lazer
 		if (lazer != null) {
 			lazer.materials [0].mainTextureOffset += new Vector2 (Time.deltaTime * 0.1f, 0.0f);
 			lazer.materials [0].SetTextureOffset ("_NoiseTex", new Vector2 (-Time.time, 0.0f));
@@ -42,25 +40,36 @@ public class PlayerControl : MonoBehaviour
 			lazer.SetPosition (1, hitInfo.point);
 		}
 		// shot
-		if (Input.GetMouseButton (0) && shotTimer > PlayerHealth.playerHealth.rateFire) {
-			if (hitInfo.collider.tag != "Player") {
-				weapon.GetComponent<AudioSource> ().Play ();
-				GameObject shot = (GameObject)Instantiate (bullet, weapon.position, Quaternion.identity);
-				shot.GetComponent<Bullet> ().owner = gameObject;
-				shot.GetComponent<Bullet> ().amount = PlayerHealth.playerHealth.damage;
-				shot.GetComponent<Rigidbody> ().AddForce ((hitInfo.point - shot.transform.position).normalized * 1000f);
-				shotTimer = 0;
+		if (Input.GetMouseButton (0)) {
+			if (shotTimer > rateFire / 2f) {
+				if (hitInfo.collider.tag != "Player") {
+					if (fireCount % 2 == 0) {
+						if (isWeapon1Active)
+							Shot (hitInfo, weapon1);
+					} else {
+						if (isWeapon2Active)
+							Shot (hitInfo, weapon2);
+					}
+					fireCount++;
+					shotTimer = 0;
+				}
 			}
 		}
 		shotTimer += Time.deltaTime;
-		if (myAnim) {
-			if (PlayerHealth.playerHealth.health <= 0) {
-				myAnim.SetBool ("EnemyInSight", false);
-				myAnim.SetBool ("Dead", true);
-			} else {
-				myAnim.SetBool ("EnemyInSight", true);
-				myAnim.SetBool ("Dead", false);
-			}
+		if (shotTimer > effectsTime) {
+			weapon1.GetComponent<Light> ().enabled = false;
+			weapon2.GetComponent<Light> ().enabled = false;
 		}
+	}
+
+	void Shot (RaycastHit hitInfo, Transform weapon)
+	{
+		GameObject shot = (GameObject)Instantiate (bullet, weapon.position, Quaternion.identity);
+		shot.GetComponent<Bullet> ().owner = gameObject;
+		shot.GetComponent<Bullet> ().amount = PlayerHealth.playerHealth.damage;
+		shot.GetComponent<Rigidbody> ().AddForce ((hitInfo.point - shot.transform.position).normalized * 1000f);
+		weapon.GetComponent<ParticleSystem> ().Emit (10);
+		weapon.GetComponent<Light> ().enabled = true;
+		weapon.GetComponent<AudioSource> ().Play ();
 	}
 }
