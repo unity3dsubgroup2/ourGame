@@ -4,6 +4,7 @@ using System.Collections;
 public class WarriorAI : MonoBehaviour
 {
 	public GameObject bullet;
+	public GameObject explosion;
 
 	private Transform player;
 	private Animator myAnim;
@@ -52,7 +53,11 @@ public class WarriorAI : MonoBehaviour
 				}
 				navMeshAgent.SetDestination (player.position);
 			} else {
-				isActive = false;
+				GameObject objExplosion = (GameObject)Instantiate (
+					explosion, new Vector3 (transform.position.x, 1.5f, transform.position.z), Quaternion.identity);
+				Destroy (objExplosion, 2f);
+				Destroy (gameObject);
+/*				isActive = false;
 				navMeshAgent.Stop ();
 				if (jet != null) {
 					jet.GetComponent<ParticleSystem> ().enableEmission = false;
@@ -60,6 +65,7 @@ public class WarriorAI : MonoBehaviour
 				if (myAnim != null) {
 					myAnim.SetBool ("EnemyInSight", false);
 				}
+*/
 			}
 		}
 	}
