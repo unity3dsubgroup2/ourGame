@@ -55,7 +55,7 @@ public class WarriorAI : MonoBehaviour
 			} else {
 				GameObject objExplosion = (GameObject)Instantiate (
 					explosion, new Vector3 (transform.position.x, 1.5f, transform.position.z), Quaternion.identity);
-				Destroy (objExplosion, 2f);
+				Destroy (objExplosion, 1f);
 				Destroy (gameObject);
 /*				isActive = false;
 				navMeshAgent.Stop ();
