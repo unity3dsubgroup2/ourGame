@@ -80,7 +80,7 @@ public class WarriorAI : MonoBehaviour
 		GameObject shot = (GameObject)Instantiate (bullet, weapon.position, Quaternion.identity);
 		shot.GetComponent<Bullet> ().amount = myHealth.damage;
 		shot.GetComponent<Bullet> ().owner = gameObject;
-		Vector3 playerBody = new Vector3 (player.position.x, player.position.y, player.position.z);
+		Vector3 playerBody = new Vector3 (player.position.x, player.position.y + 1f, player.position.z);
 		shot.GetComponent<Rigidbody> ().AddForce ((playerBody - shot.transform.position).normalized * 1000f);
 	}
 
