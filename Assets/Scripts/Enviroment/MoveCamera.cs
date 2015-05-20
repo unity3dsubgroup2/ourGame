@@ -37,10 +37,6 @@ public class MoveCamera : MonoBehaviour
 		// smooth move cam to new position
 		newCamPosition = Player.position + camPosition + addOfset * 2f;
 		camContainer.position = Vector3.Lerp (camContainer.position, newCamPosition, Time.deltaTime * Smooth);
-		print (camContainer.position);
-
-
-
 
 
 		// rotate cam

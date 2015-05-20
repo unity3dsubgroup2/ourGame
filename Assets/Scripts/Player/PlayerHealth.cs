@@ -7,6 +7,7 @@ public class PlayerHealth : MonoBehaviour
 	public float armor = 0f;				// armor (0-100) 100 block 60% damage
 	public float damage = 0f;		// damage (0-100)
 	public float rateFire = 0.5f; 	// rate of fire (0-100) 
+	public float rateMissile = 2f;  // time between of missiles lunching (in seconds)
 	public float experience = 0f;	// experience for 0 on 1 level to 20000 on 20 level
 
 	private static PlayerHealth _playerObj;

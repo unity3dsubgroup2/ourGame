@@ -8,7 +8,6 @@ public class WarriorAI : MonoBehaviour
 
 	private Transform player;
 	private Animator myAnim;
-	private Transform jet;
 	private NavMeshAgent navMeshAgent;
 	private Enemy myHealth;
 	private float speed = 3f;
@@ -24,7 +23,6 @@ public class WarriorAI : MonoBehaviour
 		myAnim = GetComponent<Animator> ();
 		navMeshAgent = GetComponent<NavMeshAgent> ();
 		myHealth = GetComponent<Enemy> ();
-		jet = transform.Find ("Jet");
 	}
 	
 	void Update ()
@@ -57,15 +55,6 @@ public class WarriorAI : MonoBehaviour
 					explosion, new Vector3 (transform.position.x, 1.5f, transform.position.z), Quaternion.identity);
 				Destroy (objExplosion, 1f);
 				Destroy (gameObject);
-/*				isActive = false;
-				navMeshAgent.Stop ();
-				if (jet != null) {
-					jet.GetComponent<ParticleSystem> ().enableEmission = false;
-				}
-				if (myAnim != null) {
-					myAnim.SetBool ("EnemyInSight", false);
-				}
-*/
 			}
 		}
 	}
