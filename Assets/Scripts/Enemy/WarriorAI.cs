@@ -32,7 +32,7 @@ public class WarriorAI : MonoBehaviour
 				navMeshAgent.speed = speed;
 		
 				float angle = Vector3.Angle (transform.forward, (player.position - transform.position));
-				if (angle < 15f) {
+				if (angle < 15f && Vector3.Distance (transform.position, player.position) < 10) {
 					if (shotTimer > myHealth.shotRate && myHealth.isAlive) {
 						if (myAnim != null) {
 							myAnim.SetBool ("EnemyInSight", true);
@@ -49,7 +49,12 @@ public class WarriorAI : MonoBehaviour
 				if (myAnim != null) {
 					myAnim.SetFloat ("Forward", 0.5f, 0.1f, Time.deltaTime);
 				}
-				navMeshAgent.SetDestination (player.position);
+				if (Vector3.Distance (transform.position, player.position) < 10) {
+
+					navMeshAgent.SetDestination (player.position);
+				} else {
+					// patroling
+				}
 			} else {
 				GameObject objExplosion = (GameObject)Instantiate (
 					explosion, new Vector3 (transform.position.x, 1.5f, transform.position.z), Quaternion.identity);

@@ -21,7 +21,7 @@ public class Terminal : MonoBehaviour
 			sound.Play ();
 		}
 
-		Moni.GetComponent<Material> ().SetTextureOffset ("_Emission", new Vector2 (+1, 1));
+//		Moni.GetComponent<Material> ().SetTextureOffset ("_Emission", new Vector2 (+1, 1));
 /*
 		if (Input.GetKeyDown (KeyCode.Space) && OnCol == true && OffOn) {			
 			door.GetComponent<BoxCollider> ().enabled = false;
