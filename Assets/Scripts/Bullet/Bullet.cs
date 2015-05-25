@@ -8,9 +8,14 @@ public class Bullet : MonoBehaviour
 	public GameObject owner;
 	private float timeToLife = 2f;
 
+	void Start ()
+	{
+		Destroy (gameObject, timeToLife);
+	}
+
 	void OnTriggerEnter (Collider other)
 	{
-		if (other.gameObject != owner) {
+		if (other.gameObject != owner && other.tag != "Terminal") {
 			GetComponent<Rigidbody> ().velocity = Vector3.zero;
 			if (other.tag == "Enemy") {
 				transform.position = new Vector3 (other.transform.position.x,
@@ -27,10 +32,5 @@ public class Bullet : MonoBehaviour
 			GetComponent<ParticleSystem> ().Emit (40);
 			Destroy (gameObject, 0.5f);
 		}
-	}
-
-	void Start ()
-	{
-		Destroy (gameObject, timeToLife);
 	}
 }
