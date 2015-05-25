@@ -31,11 +31,13 @@ public class PlayerControl : MonoBehaviour
 		weapon1 = transform.Find ("Turret/Gun1/Weapon").transform;
 		weapon2 = transform.Find ("Turret/Gun2/Weapon").transform;
 		weaponMissile = transform.Find ("Turret/MissileSystem/Weapon").transform;
+		ReactivateWeapons ();
 		missileIndicator = transform.Find ("Turret/MissileSystem/ReadyIndicator").GetComponent<Light> ();
 		shotTimer = 0;
 		rateFire = PlayerHealth.playerHealth.rateFire;
 		rateMissile = PlayerHealth.playerHealth.rateMissile;
 		lazer = transform.Find ("Turret/Laser").GetComponent<LineRenderer> ();
+		lazer.SetVertexCount (2);
 	}
 	
 	void Update ()
@@ -106,5 +108,24 @@ public class PlayerControl : MonoBehaviour
 		weapon.GetComponent<ParticleSystem> ().Emit (10);
 		weapon.GetComponent<Light> ().enabled = true;
 		weapon.GetComponent<AudioSource> ().Play ();
+	}
+
+	public void ReactivateWeapons ()
+	{
+		if (isWeapon1Active) {
+			transform.Find ("Turret/Gun1").gameObject.SetActive (true);
+		} else {
+			transform.Find ("Turret/Gun1").gameObject.SetActive (false);
+		}
+		if (isWeapon2Active) {
+			transform.Find ("Turret/Gun2").gameObject.SetActive (true);
+		} else {
+			transform.Find ("Turret/Gun2").gameObject.SetActive (false);
+		}
+		if (isMissileActive) {
+			transform.Find ("Turret/MissileSystem").gameObject.SetActive (true);
+		} else {
+			transform.Find ("Turret/MissileSystem").gameObject.SetActive (false);
+		}
 	}
 }
