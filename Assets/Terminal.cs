@@ -1,22 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Terminal : MonoBehaviour {
-	public GameObject Door;
-	public AudioSource tdoor;
-	bool OnCol = false;
-	bool OffOn = true;
-	// Use this for initialization
-	void Start () {
-	
+public class Terminal : MonoBehaviour
+{
+	public GameObject door;
+	AudioSource sound;
+	bool onCol = false;
+	bool offOn = true;
+
+	void Start ()
+	{
+		sound = GetComponent<AudioSource> ();
 	}
 	
-	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
+		if (onCol && Input.GetKeyDown (KeyCode.Space)) {
+			door.GetComponent<DoorLight> ().Effects (!door.GetComponent<BoxCollider> ().enabled);
+			sound.Play ();
+		}
 
+/*
 		if (Input.GetKeyDown (KeyCode.Space) && OnCol == true && OffOn) {			
-			Door.GetComponent<BoxCollider>().enabled = false;
-			tdoor.Play();
+			door.GetComponent<BoxCollider> ().enabled = false;
+			sound.Play ();
 			print ("door is opened");
 		}
 		if (Input.GetKeyUp (KeyCode.Space) && OnCol) {			
@@ -24,20 +31,20 @@ public class Terminal : MonoBehaviour {
 			print (OffOn);
 		}
 		if (Input.GetKeyDown (KeyCode.Space) && OnCol && !OffOn) {
-			Door.GetComponent<BoxCollider> ().enabled = true;
-			tdoor.Play();
+			door.GetComponent<BoxCollider> ().enabled = true;
+			sound.Play ();
 			print ("door is closed");
-
+		}
+*/
+	}
+	void OnTriggerStay (Collider col)
+	{
+		if (col.tag == "Player" && !onCol) {
+			onCol = true;
 		}
 	}
-	void OnTriggerStay(Collider col){
-		if (col.tag == "Enemy") {
-			OnCol = true;
-			print ("col on");
-		}
-	}
-	void OnTriggerExit(Collider other){
-		OnCol = false;		
-		print ("col off");		
+	void OnTriggerExit (Collider other)
+	{
+		onCol = false;		
 	}
 }

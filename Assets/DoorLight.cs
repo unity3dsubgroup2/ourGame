@@ -1,29 +1,32 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DoorLight : MonoBehaviour {
-	public GameObject dlight;
-	public AudioSource dsound;
-	public MeshRenderer Obj;
+public class DoorLight : MonoBehaviour
+{
+	Light dlight;
+	AudioSource dsound;
+	public MeshRenderer door;
 	float emission;
-	float emission1;
-	// Use this for initialization
-	void Start () {	
-	
-		}
-	// Update is called once per frame
-	void Update () {
 
-		if (gameObject.GetComponent<BoxCollider> ().enabled == false) {
-			Obj.material.SetColor ("_EmissionColor", new Color (emission, emission, emission));
+	void Start ()
+	{	
+		dsound = GetComponent<AudioSource> ();
+		dlight = GetComponent<Light> ();
+	}
+
+	void Update ()
+	{
+		if (gameObject.GetComponent<BoxCollider> ().enabled) {
 			emission = Mathf.PingPong (Time.time, 1.0f);
-			dlight.GetComponent<Light>().color = new Color (emission1,emission1,emission1);
-			dsound.enabled = false;
-		}else if(gameObject.GetComponent<BoxCollider> ().enabled == true){
-			emission1 = Mathf.PingPong (Time.time, 1.0f);
-			dlight.GetComponent<Light>().color = new Color (emission1,0,0);
-			Obj.material.SetColor ("_EmissionColor", new Color (emission1, 0, 0));
-			dsound.enabled = true;
+			dlight.GetComponent<Light> ().color = new Color (emission, 0, 0);
+			door.material.SetColor ("_EmissionColor", new Color (emission, 0, 0));
 		}
+	}
+
+	public void Effects (bool state)
+	{
+		door.enabled = state;
+		dsound.enabled = state;
+		GetComponent<BoxCollider> ().enabled = state;
 	}
 }
