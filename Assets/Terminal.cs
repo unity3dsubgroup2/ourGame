@@ -30,7 +30,7 @@ public class Terminal : MonoBehaviour {
 
 		}
 	}
-	void OnTriggerEnter(Collider col){
+	void OnTriggerStay(Collider col){
 		if (col.tag == "Enemy") {
 			OnCol = true;
 			print ("col on");
