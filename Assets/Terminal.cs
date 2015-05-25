@@ -5,6 +5,7 @@ public class Terminal : MonoBehaviour
 {
 	public GameObject door;
 	AudioSource sound;
+	public GameObject Moni;
 	bool onCol = false;
 	bool offOn = true;
 
@@ -20,6 +21,7 @@ public class Terminal : MonoBehaviour
 			sound.Play ();
 		}
 
+		Moni.GetComponent<Material> ().SetTextureOffset ("_Emission", new Vector2 (+1, 1));
 /*
 		if (Input.GetKeyDown (KeyCode.Space) && OnCol == true && OffOn) {			
 			door.GetComponent<BoxCollider> ().enabled = false;

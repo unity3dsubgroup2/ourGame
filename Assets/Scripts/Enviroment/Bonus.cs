@@ -38,7 +38,7 @@ public class Bonus : MonoBehaviour
 	void OnGUI ()
 	{
 		if (showMessage) {
-			GUI.Window (0, new Rect (30, 30, Screen.width - 60, Screen.height - 60), GUIMainMenu, "Main menu");
+			GUI.Window (0, new Rect (30, 30, Screen.width - 60, Screen.height - 60), GUIMainMenu, "Incoming message");
 		}
 	}
 
