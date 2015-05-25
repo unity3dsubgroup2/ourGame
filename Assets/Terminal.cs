@@ -4,6 +4,7 @@ using System.Collections;
 public class Terminal : MonoBehaviour {
 	public GameObject Door;
 	public AudioSource tdoor;
+	public GameObject Moni;
 	bool OnCol = false;
 	bool OffOn = true;
 	// Use this for initialization
@@ -13,6 +14,8 @@ public class Terminal : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		Moni.GetComponent<Material>().SetTextureOffset("_Emission", new Vector2 (+1,1);
 
 		if (Input.GetKeyDown (KeyCode.Space) && OnCol == true && OffOn) {			
 			Door.GetComponent<BoxCollider>().enabled = false;
