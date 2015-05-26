@@ -16,10 +16,9 @@ public class Missile : MonoBehaviour
 		myBody.AddForce (new Vector3 (0f, 8f, 0f), ForceMode.Impulse);
 	}
 	
-	void Update ()
+	void FixedUpdate ()
 	{
 		speed += Time.deltaTime / 4f;
-		//transform.LookAt (target.transform.position);
 		transform.rotation = Quaternion.Lerp (transform.rotation, Quaternion.LookRotation (target.transform.position - transform.position), 0.1f);
 		transform.position = Vector3.MoveTowards (transform.position, target.transform.position + new Vector3 (0f, 1f, 0f), speed);
 	}

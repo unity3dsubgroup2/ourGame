@@ -74,28 +74,30 @@ public class PlayerControl : MonoBehaviour
 			weapon2.GetComponent<Light> ().enabled = false;
 		}
 		// lunch missile
-		if (!isMissileReady) {
-			missileTimer += Time.deltaTime;
-			missileIndicator.intensity = missileTimer;
-			if (missileTimer > rateMissile) {
-				isMissileReady = true;
-			}
-		} else { // blink ready indicator
-			if ((int)(Time.time * 2f) % 2 == 0) {
-				missileIndicator.intensity = 0;
-			} else {
+		if (isMissileActive) {
+			if (!isMissileReady) {
+				missileTimer += Time.deltaTime;
 				missileIndicator.intensity = missileTimer;
-			}
+				if (missileTimer > rateMissile) {
+					isMissileReady = true;
+				}
+			} else { // blink ready indicator
+				if ((int)(Time.time * 2f) % 2 == 0) {
+					missileIndicator.intensity = 0;
+				} else {
+					missileIndicator.intensity = missileTimer;
+				}
 
-		}
-		if (Input.GetMouseButtonDown (1) && isMissileReady && (hitInfo.collider.tag == "Enemy" || hitInfo.collider.tag == "Respawn")) {
-			GameObject missileObj = (GameObject)Instantiate (missile, weaponMissile.position, new Quaternion (0.7f, 0, 0, -0.7f));
-			missileObj.GetComponent<Missile> ().target = hitInfo.collider.gameObject;
-			missileObj.GetComponent<Missile> ().owner = gameObject;
-			missileObj.GetComponent<Missile> ().amount = 200f;
-			missileTimer = 0;
-			missileIndicator.intensity = 0f;
-			isMissileReady = false;
+			}
+			if (Input.GetMouseButtonDown (1) && isMissileReady && (hitInfo.collider.tag == "Enemy" || hitInfo.collider.tag == "Respawn")) {
+				GameObject missileObj = (GameObject)Instantiate (missile, weaponMissile.position, new Quaternion (0.7f, 0, 0, -0.7f));
+				missileObj.GetComponent<Missile> ().target = hitInfo.collider.gameObject;
+				missileObj.GetComponent<Missile> ().owner = gameObject;
+				missileObj.GetComponent<Missile> ().amount = 200f;
+				missileTimer = 0;
+				missileIndicator.intensity = 0f;
+				isMissileReady = false;
+			}
 		}
 	}
 
