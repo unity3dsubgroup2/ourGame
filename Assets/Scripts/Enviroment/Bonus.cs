@@ -17,21 +17,23 @@ public class Bonus : MonoBehaviour
 	void OnTriggerEnter (Collider other)
 	{
 		if (other.tag == "Player") {
-			if (bonus == Bonuses.Weapon1) {
+			if (bonus == Bonuses.Weapon1 && !other.GetComponent<PlayerControl> ().isWeapon1Active) {
 				other.GetComponent<PlayerControl> ().isWeapon1Active = true;
 				txt = "Left Weapon activated.";
 			}
-			if (bonus == Bonuses.Weapon2) {
+			if (bonus == Bonuses.Weapon2 && !other.GetComponent<PlayerControl> ().isWeapon2Active) {
 				other.GetComponent<PlayerControl> ().isWeapon2Active = true;
 				txt = "Right Weapon activated.";
 			}
-			if (bonus == Bonuses.MissileSystem) {
+			if (bonus == Bonuses.MissileSystem && !other.GetComponent<PlayerControl> ().isMissileActive) {
 				other.GetComponent<PlayerControl> ().isMissileActive = true;
 				txt = "Missile System activated.";
 			}
-			other.GetComponent<PlayerControl> ().ReactivateWeapons ();
-			showMessage = true;
-			Time.timeScale = 0;
+			if (txt != "") {
+				other.GetComponent<PlayerControl> ().ReactivateWeapons ();
+				showMessage = true;
+				Time.timeScale = 0;
+			}
 		}
 	}
 
@@ -50,6 +52,7 @@ public class Bonus : MonoBehaviour
 		showMessage = !GUI.Button (new Rect (130, 60, 60, 30), "Ok");
 		if (showMessage == false) {
 			Time.timeScale = 1;
+			txt = "";
 		}
 	}
 }

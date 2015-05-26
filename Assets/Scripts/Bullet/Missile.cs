@@ -26,9 +26,12 @@ public class Missile : MonoBehaviour
 
 	void OnTriggerEnter (Collider other)
 	{
-		if (other.gameObject != owner) {
+		if (other.tag != owner.tag && other.tag != "Terminal") {
 			if (other.tag == "Enemy") {
 				other.GetComponent<Enemy> ().TakeDamage (amount);
+			}
+			if (other.tag == "Respawn") {
+				other.GetComponent<Respawn> ().TakeDamage (amount);
 			}
 			if (other.tag == "Player") {
 				other.GetComponent<PlayerHealth> ().TakeDamage (amount);

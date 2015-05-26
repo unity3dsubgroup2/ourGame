@@ -88,7 +88,7 @@ public class PlayerControl : MonoBehaviour
 			}
 
 		}
-		if (Input.GetMouseButtonDown (1) && isMissileReady && hitInfo.collider.tag == "Enemy") {
+		if (Input.GetMouseButtonDown (1) && isMissileReady && (hitInfo.collider.tag == "Enemy" || hitInfo.collider.tag == "Respawn")) {
 			GameObject missileObj = (GameObject)Instantiate (missile, weaponMissile.position, new Quaternion (0.7f, 0, 0, -0.7f));
 			missileObj.GetComponent<Missile> ().target = hitInfo.collider.gameObject;
 			missileObj.GetComponent<Missile> ().owner = gameObject;
