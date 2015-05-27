@@ -11,6 +11,7 @@ public class Respawn : MonoBehaviour
 	public int reward = 20;
 	public bool isAlive = true;
 
+	bool isActive = false;
 	Transform player;
 	float timer = 0;
 
@@ -18,10 +19,11 @@ public class Respawn : MonoBehaviour
 	{
 		player = GameObject.FindGameObjectWithTag ("Player").transform;
 	}
+
 	void Update ()
 	{
-		if (isAlive) {
-			if (timer > prepareTime && Vector3.Distance (transform.position, player.position) < 15) {
+		if (isActive && isAlive) {
+			if (timer > prepareTime) {
 				GameObject obj = (GameObject)Instantiate (spawn, transform.position, Quaternion.identity);
 				timer = 0;
 			}
@@ -39,5 +41,10 @@ public class Respawn : MonoBehaviour
 				isAlive = false;
 			}
 		}
+	}
+
+	public void Activate ()
+	{
+		isActive = true;
 	}
 }
