@@ -36,6 +36,7 @@ public class Bullet : MonoBehaviour
 
 			GetComponent<MeshRenderer> ().enabled = false;
 			GetComponent<ParticleSystem> ().Emit (40);
+			GetComponent<AudioSource> ().Play ();
 			Destroy (gameObject, 0.5f);
 		}
 	}
