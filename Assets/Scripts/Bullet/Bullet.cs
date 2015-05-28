@@ -17,22 +17,16 @@ public class Bullet : MonoBehaviour
 	{
 		if (other.tag != owner.tag && other.tag != "Terminal") {
 			GetComponent<Rigidbody> ().velocity = Vector3.zero;
-			if (other.tag == "Enemy") {
-				transform.position = new Vector3 (other.transform.position.x,
-			                                 other.transform.position.y + 0.75f,
-			                                 other.transform.position.z);
-				other.GetComponent<Enemy> ().TakeDamage (amount);
-			}
-			if (other.tag == "Respawn") {
-				transform.position = new Vector3 (other.transform.position.x,
-				                                  other.transform.position.y + 0.75f,
-				                                  other.transform.position.z);
-				other.GetComponent<Respawn> ().TakeDamage (amount);
-			}
 			if (other.tag == "Player") {
 				other.GetComponent<PlayerHealth> ().TakeDamage (amount);
+			} else {
+				if (other.GetComponent<EnemyHealth> () != null) {
+					transform.position = new Vector3 (other.transform.position.x,
+			                                 other.transform.position.y + 0.75f,
+			                                 other.transform.position.z);
+					other.GetComponent<EnemyHealth> ().TakeDamage (amount);
+				}
 			}
-
 
 			GetComponent<MeshRenderer> ().enabled = false;
 			GetComponent<ParticleSystem> ().Emit (40);

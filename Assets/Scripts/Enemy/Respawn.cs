@@ -6,10 +6,9 @@ public class Respawn : MonoBehaviour
 
 	public GameObject spawn;
 	public float prepareTime = 5f;
-	public float health = 100f;
-	public float armor = 50f;
 	public int reward = 20;
-	public bool isAlive = true;
+	private EnemyHealth myHealth;
+	
 
 	bool isActive = false;
 	Transform player;
@@ -18,28 +17,18 @@ public class Respawn : MonoBehaviour
 	void Start ()
 	{
 		player = GameObject.FindGameObjectWithTag ("Player").transform;
+		myHealth = GetComponent<EnemyHealth> ();
+		
 	}
 
 	void Update ()
 	{
-		if (isActive && isAlive) {
+		if (isActive && myHealth.isAlive) {
 			if (timer > prepareTime) {
 				GameObject obj = (GameObject)Instantiate (spawn, transform.position, Quaternion.identity);
 				timer = 0;
 			}
 			timer += Time.deltaTime;
-		}
-	}
-
-	public void TakeDamage (float amount)
-	{
-		// Decrement health
-		if (isAlive) {
-			health -= amount - (amount * armor * 0.6f) / 100f;
-			if (health <= 0) {
-				PlayerHealth.playerHealth.GetReward (reward);
-				isAlive = false;
-			}
 		}
 	}
 

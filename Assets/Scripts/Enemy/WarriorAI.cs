@@ -9,7 +9,7 @@ public class WarriorAI : MonoBehaviour
 	private Transform player;
 	private Animator myAnim;
 	private NavMeshAgent navMeshAgent;
-	private Enemy myHealth;
+	private EnemyHealth myHealth;
 	private float speed = 3f;
 	private Transform weapon;
 	private bool isActive = true;
@@ -22,7 +22,7 @@ public class WarriorAI : MonoBehaviour
 		weapon = transform.Find ("Weapon").transform;
 		myAnim = GetComponent<Animator> ();
 		navMeshAgent = GetComponent<NavMeshAgent> ();
-		myHealth = GetComponent<Enemy> ();
+		myHealth = GetComponent<EnemyHealth> ();
 	}
 	
 	void Update ()
@@ -32,7 +32,7 @@ public class WarriorAI : MonoBehaviour
 				navMeshAgent.speed = speed;
 		
 				float angle = Vector3.Angle (transform.forward, (player.position - transform.position));
-				if (angle < 15f && Vector3.Distance (transform.position, player.position) < 10) {
+				if (angle < 15f && Vector3.Distance (transform.position, player.position) < 30) {
 					if (shotTimer > myHealth.shotRate && myHealth.isAlive) {
 						if (myAnim != null) {
 							myAnim.SetBool ("EnemyInSight", true);

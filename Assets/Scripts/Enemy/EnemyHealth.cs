@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Enemy : MonoBehaviour
+public class EnemyHealth : MonoBehaviour
 {
 
 	public float health = 100f;
@@ -11,13 +11,6 @@ public class Enemy : MonoBehaviour
 	public int reward = 10;
 	public float shotRate = 3f;
 
-	private Animator myAnim;
-
-	void Start ()
-	{
-		myAnim = GetComponent<Animator> ();
-	}
-
 	public void TakeDamage (float amount)
 	{
 		// Decrement health
@@ -25,12 +18,8 @@ public class Enemy : MonoBehaviour
 			health -= amount - (amount * armor * 0.6f) / 100f;
 			if (health <= 0) {
 				PlayerHealth.playerHealth.GetReward (reward);
-				if (myAnim)
-					myAnim.SetBool ("Dead", true);
 				isAlive = false;
 			}
 		}
 	}
-
-
 }
