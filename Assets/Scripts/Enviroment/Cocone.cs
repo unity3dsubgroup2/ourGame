@@ -15,6 +15,7 @@ public class Cocone : MonoBehaviour
 	{
 		if (other.tag == "Player") {
 			myAnim.SetBool ("Open", true);
+			GetComponent<AudioSource> ().Play ();
 		}
 	}
 
@@ -22,6 +23,7 @@ public class Cocone : MonoBehaviour
 	{
 		if (other.tag == "Player") {
 			myAnim.SetBool ("Open", false);
+			GetComponent<AudioSource> ().Play ();
 		}
 	}
 }
