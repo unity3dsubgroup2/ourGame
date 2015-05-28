@@ -10,6 +10,7 @@ public class EnemyHealth : MonoBehaviour
 	public float damage = 20f;
 	public int reward = 10;
 	public float shotRate = 3f;
+	public float distanceToShot = 10f;
 
 	public void TakeDamage (float amount)
 	{
