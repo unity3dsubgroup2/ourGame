@@ -14,13 +14,13 @@ public class Missile : MonoBehaviour
 	void Start ()
 	{
 		myBody = GetComponent<Rigidbody> ();
-		myBody.AddForce (new Vector3 (0f, 8f, 0f), ForceMode.Impulse);
+		myBody.AddForce (new Vector3 (0f, 10f, 0f), ForceMode.Impulse);
 	}
 	
 	void FixedUpdate ()
 	{
 		if (target.gameObject != null) {
-			hitPoint = target.transform.position;
+			hitPoint = target.transform.position + new Vector3 (0f, 0.75f, 0f);
 		} else if (Vector3.Distance (transform.position, hitPoint) < 1f) { // if the target destroyed - move to last known position and selfdestroy
 			Destroy (gameObject);
 		}
@@ -31,16 +31,20 @@ public class Missile : MonoBehaviour
 
 	void OnTriggerEnter (Collider other)
 	{
-		if (other.tag == "Player") {
-			other.GetComponent<PlayerHealth> ().TakeDamage (amount);
-		} else {
-			if (other.GetComponent<EnemyHealth> () != null) {
-				transform.position = new Vector3 (other.transform.position.x,
+		if (other.tag != "Sensor") { // ignore the sensor's collider
+			if (other.tag == "Player") {
+				other.GetComponent<PlayerHealth> ().TakeDamage (amount);
+			} else {
+				if (other.GetComponent<EnemyHealth> () != null) {
+					/*
+					transform.position = new Vector3 (other.transform.position.x,
 				                                  other.transform.position.y + 0.75f,
 				                                  other.transform.position.z);
-				other.GetComponent<EnemyHealth> ().TakeDamage (amount);
+				                                  */
+					other.GetComponent<EnemyHealth> ().TakeDamage (amount);
+				}
 			}
+			Destroy (gameObject);
 		}
-		Destroy (gameObject);
 	}
 }

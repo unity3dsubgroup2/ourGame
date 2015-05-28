@@ -15,7 +15,7 @@ public class Bullet : MonoBehaviour
 
 	void OnTriggerEnter (Collider other)
 	{
-		if (other.tag != owner.tag && other.tag != "Terminal") {
+		if (other.tag != owner.tag && other.tag != "Terminal" && other.tag != "Sensor" && other.tag != "Weapon") {
 			GetComponent<Rigidbody> ().velocity = Vector3.zero;
 			if (other.tag == "Player") {
 				other.GetComponent<PlayerHealth> ().TakeDamage (amount);
