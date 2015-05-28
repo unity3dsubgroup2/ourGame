@@ -130,4 +130,11 @@ public class PlayerControl : MonoBehaviour
 			transform.Find ("Turret/MissileSystem").gameObject.SetActive (false);
 		}
 	}
+
+	void OnCollisionStay (Collision collision)
+	{
+		if (collision.gameObject.tag == "Untagged" && !GetComponent<AudioSource> ().isPlaying) {
+			GetComponent<AudioSource> ().Play ();
+		}
+	}
 }
