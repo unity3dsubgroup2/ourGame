@@ -15,6 +15,7 @@ public class PlayerControl : MonoBehaviour
 	private Transform weaponMissile;
 	private float effectsTime = 0.1f;
 	private LineRenderer lazer;
+	private bool raycastResult = false;
 
 	private float shotTimer;
 	private float missileTimer;
@@ -23,6 +24,7 @@ public class PlayerControl : MonoBehaviour
 	private float rateMissile;
 	private bool isMissileReady = false;
 	private int fireCount = 0;
+	private float defaultPitch;
 
 
 	void Start ()
@@ -38,18 +40,24 @@ public class PlayerControl : MonoBehaviour
 		rateMissile = PlayerHealth.playerHealth.rateMissile;
 		lazer = transform.Find ("Turret/Laser").GetComponent<LineRenderer> ();
 		lazer.SetVertexCount (2);
+		defaultPitch = GetComponent<AudioSource> ().pitch;
 	}
 	
 	void Update ()
 	{
 		RaycastHit hitInfo;
-		Physics.Raycast (weapon1.transform.position, weapon1.forward, out hitInfo, Mathf.Infinity, layerMask);
+		raycastResult = Physics.Raycast (weapon1.transform.position, weapon1.forward, out hitInfo, Mathf.Infinity, layerMask);
 		// draw lazer
-		if (lazer != null) {
+		if (lazer != null && raycastResult) {
 			lazer.materials [0].mainTextureOffset += new Vector2 (Time.deltaTime * 0.1f, 0.0f);
 			lazer.materials [0].SetTextureOffset ("_NoiseTex", new Vector2 (-Time.time, 0.0f));
 			lazer.SetPosition (0, lazer.transform.position);
 			lazer.SetPosition (1, hitInfo.point);
+		} else {
+			lazer.materials [0].mainTextureOffset += new Vector2 (Time.deltaTime * 0.1f, 0.0f);
+			lazer.materials [0].SetTextureOffset ("_NoiseTex", new Vector2 (-Time.time, 0.0f));
+			lazer.SetPosition (0, lazer.transform.position);
+			lazer.SetPosition (1, lazer.transform.position);
 		}
 		// shot
 		if (Input.GetMouseButton (0)) {
@@ -134,6 +142,7 @@ public class PlayerControl : MonoBehaviour
 	void OnCollisionStay (Collision collision)
 	{
 		if (collision.gameObject.tag == "Untagged" && !GetComponent<AudioSource> ().isPlaying) {
+			GetComponent<AudioSource> ().pitch = defaultPitch + Random.Range (-0.1f, 0.1f);
 			GetComponent<AudioSource> ().Play ();
 		}
 	}

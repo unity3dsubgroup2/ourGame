@@ -50,9 +50,10 @@ public class WarriorAI : MonoBehaviour
 					myAnim.SetFloat ("Forward", 1f, 0.1f, Time.deltaTime);  // forward walk speed
 				}
 				if (Vector3.Distance (transform.position, player.position) < myHealth.distanceToShot) {
+					GetComponent<Patrolling> ().patrolling = false;
 					navMeshAgent.SetDestination (player.position);
 				} else {
-					// patroling
+					GetComponent<Patrolling> ().ResumePatrolling ();
 				}
 			} else {
 				GameObject objExplosion = (GameObject)Instantiate (

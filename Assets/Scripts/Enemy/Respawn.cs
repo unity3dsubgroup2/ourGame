@@ -6,6 +6,7 @@ public class Respawn : MonoBehaviour
 
 	public GameObject spawn;
 	public float prepareTime = 5f;
+	public int spawnsPreWarm = 3;
 	public int reward = 20;
 	private EnemyHealth myHealth;
 	
@@ -18,6 +19,10 @@ public class Respawn : MonoBehaviour
 	{
 		player = GameObject.FindGameObjectWithTag ("Player").transform;
 		myHealth = GetComponent<EnemyHealth> ();
+		// Generate prewarmed spawns
+		for (int i = 0; i < spawnsPreWarm; i++) {
+			InstantiateSpawn ();
+		}
 		
 	}
 
@@ -25,7 +30,7 @@ public class Respawn : MonoBehaviour
 	{
 		if (isActive && myHealth.isAlive) {
 			if (timer > prepareTime) {
-				GameObject obj = (GameObject)Instantiate (spawn, transform.position, Quaternion.identity);
+				InstantiateSpawn ();
 				timer = 0;
 			}
 			timer += Time.deltaTime;
@@ -35,5 +40,13 @@ public class Respawn : MonoBehaviour
 	public void Activate ()
 	{
 		isActive = true;
+	}
+
+	void InstantiateSpawn ()
+	{
+		GameObject obj = (GameObject)Instantiate (spawn, transform.position, Quaternion.identity);
+		if (obj.GetComponent<AudioSource> () != null) { // if the object have walk sound - set random pitch offset
+			obj.GetComponent<AudioSource> ().pitch += Random.Range (-0.1f, 0.1f);
+		}
 	}
 }
