@@ -90,12 +90,7 @@ public class PlayerControl : MonoBehaviour
 					isMissileReady = true;
 				}
 			} else { // blink ready indicator
-				if ((int)(Time.time * 2f) % 2 == 0) {
-					missileIndicator.intensity = 0;
-				} else {
-					missileIndicator.intensity = missileTimer;
-				}
-
+				missileIndicator.intensity = ((int)(Time.time * 2f) % 2 == 0) ? 0 : missileTimer;
 			}
 			if (Input.GetMouseButtonDown (1) && isMissileReady && (hitInfo.collider.tag == "Enemy" || hitInfo.collider.tag == "Respawn")) {
 				GameObject missileObj = (GameObject)Instantiate (missile, weaponMissile.position, new Quaternion (0.7f, 0, 0, -0.7f));
