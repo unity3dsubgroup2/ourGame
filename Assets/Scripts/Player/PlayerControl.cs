@@ -62,7 +62,7 @@ public class PlayerControl : MonoBehaviour
 		// shot
 		if (Input.GetMouseButton (0)) {
 			if (shotTimer > rateFire / 2f) {
-				if (hitInfo.collider.tag != "Player") {
+				if (raycastResult && hitInfo.collider.tag != "Player") {
 					if (fireCount % 2 == 0) {
 						if (isWeapon1Active)
 							Shot (hitInfo, weapon1);
