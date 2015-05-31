@@ -26,28 +26,18 @@ public class Lighting : MonoBehaviour
 	
 	public void InitializeLighting ()
 	{
-		//Clean existing line renderers
-		lineRenderers = gameObject.GetComponentsInChildren<LineRenderer> ();
-		if (lineRenderers != null) {
-			for (int i = 0; i < lineRenderers.Length; i++)
-				DestroyImmediate (lineRenderers [i].gameObject);
-			
-			lineRenderers = null;
-		}
-		//Create game object for each line renderer and parent it to this game object
+		//Create line renderers and parent it to this gameObject
 		for (int i = 0; i < (lines); i++) {
 			GameObject temp = new GameObject ();
 			temp.transform.parent = gameObject.transform;
-			temp.name = "Line Renderer " + (i + 1);
 			temp.AddComponent<LineRenderer> ();
 		}
 		lineRenderers = gameObject.GetComponentsInChildren<LineRenderer> ();
-		//Set initial settings for each renderer
+		//Set initial settings for renderers
 		for (int i = 0; i < lineRenderers.Length; i++) {
 			lineRenderers [i].castShadows = false;
 			lineRenderers [i].receiveShadows = false;
 			lineRenderers [i].material = lightningMaterial;
-			
 			lineRenderers [i].SetVertexCount (sections);
 			lineRenderers [i].SetWidth (lineWidth, lineWidth);
 		}
@@ -55,16 +45,13 @@ public class Lighting : MonoBehaviour
 	
 	void Update ()
 	{
-		//Determine the length of a section of the bolt
+		//Determine the length of section
 		Vector3 sectionVector = (lightingReceiver.transform.position - transform.position) / sections;
-		
-		//Initialise an array of vectors for the bolt
+		//Initialise array of vectors for the bolt
 		Vector3[] lineVectors = new Vector3[sections];
-		
 		//Calculate the vectors for the middle sections
 		for (int j = 1; j < lineVectors.Length -1; j++)
 			lineVectors [j] = transform.position + (sectionVector * j);
-		
 		//Set the values in the line renderer for ecah bolt
 		for (int j = 0; j < lines; j++) {
 			if (lineRenderers [j]) {				
@@ -72,7 +59,6 @@ public class Lighting : MonoBehaviour
 				lineRenderers [j].SetPosition (0, transform.position);
 				lineRenderers [j].SetPosition (lineVectors.Length - 1, lightingReceiver.transform.position);
 				lineRenderers [j].SetWidth (lineWidth, lineWidth);
-				
 				//Set vectors for the rest of the sections adding jitter
 				for (int k = 1; k < (sections - 1); k++)
 					lineRenderers [j].SetPosition (k, AddVectorJitter (lineVectors [k], jitter));
@@ -86,7 +72,6 @@ public class Lighting : MonoBehaviour
 		vector += Vector3.left * Random.Range (-jitter, jitter);
 		vector += Vector3.up * Random.Range (-jitter, jitter);
 		vector += Vector3.forward * Random.Range (-jitter, jitter);
-		
 		return vector;
 	}
 }

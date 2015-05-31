@@ -8,6 +8,7 @@ public class Respawn : MonoBehaviour
 	public float prepareTime = 5f;
 	public int spawnsPreWarm = 3;
 	public int reward = 20;
+	public GameObject cloneEffects;
 	private EnemyHealth myHealth;
 	
 
@@ -44,7 +45,12 @@ public class Respawn : MonoBehaviour
 
 	void InstantiateSpawn ()
 	{
-		GameObject obj = (GameObject)Instantiate (spawn, transform.position, Quaternion.identity);
+		Vector3 spawnPoint = new Vector3 (transform.position.x + Random.Range (1f, 2f), 0f, transform.position.z + Random.Range (1f, 2f));
+		if (cloneEffects != null) {
+			GameObject effectObj = (GameObject)Instantiate (cloneEffects, spawnPoint, Quaternion.identity);
+			Destroy (effectObj, 1.5f);
+		}
+		GameObject obj = (GameObject)Instantiate (spawn, spawnPoint, Quaternion.identity);
 		if (obj.GetComponent<AudioSource> () != null) { // if the object have walk sound - set random pitch offset
 			obj.GetComponent<AudioSource> ().pitch += Random.Range (-0.1f, 0.1f);
 		}
