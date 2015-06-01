@@ -10,6 +10,7 @@ public class Patrolling : MonoBehaviour
 	Vector3 spawnPosition;
 	Vector3[] points;
 	int currentPoint = 0;
+	int iterationsCount = 0;
 	NavMeshAgent navAgent;
 	
 	void Start ()
@@ -23,8 +24,9 @@ public class Patrolling : MonoBehaviour
 			do {
 				points [i] = spawnPosition + (new Vector3 (Random.Range (-radius, radius), 2.5f, Random.Range (-radius, radius)));
 				NavMesh.CalculatePath (transform.position, points [i], NavMesh.AllAreas, path); // TODO: change AllAreas to current area
-			} while (path.status != NavMeshPathStatus.PathComplete);
-
+				iterationsCount++;
+			} while (path.status != NavMeshPathStatus.PathComplete && iterationsCount < 10);
+			iterationsCount = 0;
 		}
 		navAgent.SetDestination (points [currentPoint]);
 	}

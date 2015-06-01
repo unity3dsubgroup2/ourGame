@@ -57,6 +57,7 @@ public class BakeAI : MonoBehaviour
 		shot.GetComponent<Lighting> ().amount = myHealth.damage;
 		shot.GetComponent<Lighting> ().owner = gameObject;
 		shot.GetComponent<Lighting> ().lightingReceiver = player.gameObject;
+		shot.transform.SetParent (transform);
 	}
 
 

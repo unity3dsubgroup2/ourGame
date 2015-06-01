@@ -9,10 +9,11 @@ public class Respawn : MonoBehaviour
 	public int spawnsPreWarm = 3;
 	public int reward = 20;
 	public GameObject cloneEffects;
+	public GameObject breakEffects;
 	private EnemyHealth myHealth;
-	
 
 	bool isActive = false;
+	bool dead = false;
 	Transform player;
 	float timer = 0;
 
@@ -24,7 +25,6 @@ public class Respawn : MonoBehaviour
 		for (int i = 0; i < spawnsPreWarm; i++) {
 			InstantiateSpawn ();
 		}
-		
 	}
 
 	void Update ()
@@ -35,7 +35,18 @@ public class Respawn : MonoBehaviour
 				timer = 0;
 			}
 			timer += Time.deltaTime;
+		} else if (!myHealth.isAlive && !dead) {
+			dead = true;
+			Dead ();
 		}
+	}
+
+	void Dead ()
+	{
+		transform.Find ("Particle System").gameObject.SetActive (false);
+		GameObject glow = (GameObject)Instantiate (breakEffects, transform.position, Quaternion.identity);
+		glow.transform.Rotate (new Vector3 (270f, 0f, 0f));
+		glow.transform.SetParent (transform);
 	}
 
 	public void Activate ()
@@ -46,6 +57,7 @@ public class Respawn : MonoBehaviour
 	void InstantiateSpawn ()
 	{
 		Vector3 spawnPoint = new Vector3 (transform.position.x + Random.Range (1f, 2f), 0f, transform.position.z + Random.Range (1f, 2f));
+		// show spawn effects (particle system)
 		if (cloneEffects != null) {
 			GameObject effectObj = (GameObject)Instantiate (cloneEffects, spawnPoint, Quaternion.identity);
 			Destroy (effectObj, 1.5f);
