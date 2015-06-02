@@ -13,14 +13,14 @@ public class Lighting : MonoBehaviour
 	public float timeToLife = 1f;
 	public float amount = 20f;
 	public GameObject owner;
+	Vector3 receiver;
 	LineRenderer[] lineRenderers = null;
+	float subAmount;
 	
 	void Start ()
 	{
 		InitializeLighting ();
-		if (lightingReceiver.tag == "Player") {
-			lightingReceiver.GetComponent<PlayerHealth> ().TakeDamage (amount);
-		}
+		subAmount = amount / (timeToLife * 100f);
 		Destroy (gameObject, timeToLife);
 	}
 	
@@ -43,25 +43,34 @@ public class Lighting : MonoBehaviour
 		}
 	}
 	
-	void Update ()
+	void FixedUpdate ()
 	{
-		//Determine the length of section
-		Vector3 sectionVector = (lightingReceiver.transform.position - transform.position) / sections;
-		//Initialise array of vectors for the bolt
-		Vector3[] lineVectors = new Vector3[sections];
-		//Calculate the vectors for the middle sections
-		for (int j = 1; j < lineVectors.Length -1; j++)
-			lineVectors [j] = transform.position + (sectionVector * j);
-		//Set the values in the line renderer for ecah bolt
-		for (int j = 0; j < lines; j++) {
-			if (lineRenderers [j]) {				
-				//Set the beginning and end
-				lineRenderers [j].SetPosition (0, transform.position);
-				lineRenderers [j].SetPosition (lineVectors.Length - 1, lightingReceiver.transform.position);
-				lineRenderers [j].SetWidth (lineWidth, lineWidth);
-				//Set vectors for the rest of the sections adding jitter
-				for (int k = 1; k < (sections - 1); k++)
-					lineRenderers [j].SetPosition (k, AddVectorJitter (lineVectors [k], jitter));
+		receiver = lightingReceiver.transform.position + Vector3.up * 1.2f;
+		RaycastHit hitInfo;
+		if (Physics.Raycast (transform.position, receiver - transform.position, out hitInfo, 100f)) {
+			if (hitInfo.transform.tag == "Player") {
+				lightingReceiver.GetComponent<PlayerHealth> ().TakeDamage (subAmount);
+				//Determine the length of section
+				Vector3 sectionVector = (receiver - transform.position) / sections;
+				//Initialise array of vectors for the bolt
+				Vector3[] lineVectors = new Vector3[sections];
+				//Calculate the vectors for the middle sections
+				for (int j = 1; j < lineVectors.Length -1; j++)
+					lineVectors [j] = transform.position + (sectionVector * j);
+				//Set the values in the line renderer for ecah bolt
+				for (int j = 0; j < lines; j++) {
+					if (lineRenderers [j]) {				
+						//Set the beginning and end
+						lineRenderers [j].SetPosition (0, transform.position);
+						lineRenderers [j].SetPosition (lineVectors.Length - 1, receiver);
+						lineRenderers [j].SetWidth (lineWidth, lineWidth);
+						//Set vectors for the rest of the sections adding jitter
+						for (int k = 1; k < (sections - 1); k++)
+							lineRenderers [j].SetPosition (k, AddVectorJitter (lineVectors [k], jitter));
+					}
+				}
+			} else {
+				Destroy (gameObject);
 			}
 		}
 	}
