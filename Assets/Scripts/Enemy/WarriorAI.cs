@@ -20,6 +20,7 @@ public class WarriorAI : MonoBehaviour
 	{
 		player = GameObject.FindGameObjectWithTag ("Player").transform;
 		weapon = transform.Find ("Weapon").transform;
+		weapon.GetComponent<AudioSource> ().pitch += Random.Range (-0.075f, 0.075f);
 		myAnim = GetComponent<Animator> ();
 		navMeshAgent = GetComponent<NavMeshAgent> ();
 		myHealth = GetComponent<EnemyHealth> ();
@@ -71,6 +72,7 @@ public class WarriorAI : MonoBehaviour
 
 	void Shot ()
 	{
+		weapon.GetComponent<AudioSource> ().Play ();
 		GameObject shot = (GameObject)Instantiate (bullet, weapon.position, Quaternion.identity);
 		shot.GetComponent<Bullet> ().amount = myHealth.damage;
 		shot.GetComponent<Bullet> ().owner = gameObject;

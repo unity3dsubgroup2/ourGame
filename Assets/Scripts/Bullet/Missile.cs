@@ -31,7 +31,7 @@ public class Missile : MonoBehaviour
 
 	void OnTriggerEnter (Collider other)
 	{
-		if (other.tag != owner.tag && other.tag != "Sensor") { // ignore the sensor's collider
+		if (other != null && other.tag != owner.tag && other.tag != "Sensor") { // ignore the sensor's collider
 			if (other.tag == "Player") {
 				other.GetComponent<PlayerHealth> ().TakeDamage (amount);
 			} else {

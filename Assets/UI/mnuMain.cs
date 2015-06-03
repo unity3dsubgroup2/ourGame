@@ -10,8 +10,6 @@ public class mnuMain : MonoBehaviour
 	public Button btnDiff;
 	public Button btnMusic;
 
-	private 
-	
 	void Start ()
 	{
 		ShowMenu (true);
@@ -52,13 +50,13 @@ public class mnuMain : MonoBehaviour
 		Text textObj = btnDiff.transform.Find ("Text").GetComponent<Text> ();
 		if (textObj.text == "Difficulty: Easy") {
 			textObj.text = "Difficulty: Normal";
-			PlayerHealth.playerHealth.difficulty = 1;
+			PlayerHealth.playerHealth.difficulty = 1f;
 		} else if (textObj.text == "Difficulty: Normal") {
 			textObj.text = "Difficulty: Hard";
-			PlayerHealth.playerHealth.difficulty = 2;
+			PlayerHealth.playerHealth.difficulty = 2f;
 		} else {
 			textObj.text = "Difficulty: Easy";
-			PlayerHealth.playerHealth.difficulty = 0;
+			PlayerHealth.playerHealth.difficulty = 0.5f;
 		}
 	}
 

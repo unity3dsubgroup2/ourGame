@@ -14,12 +14,10 @@ public class Respawn : MonoBehaviour
 
 	bool isActive = false;
 	bool dead = false;
-	Transform player;
 	float timer = 0;
 
 	void Start ()
 	{
-		player = GameObject.FindGameObjectWithTag ("Player").transform;
 		myHealth = GetComponent<EnemyHealth> ();
 		// Generate prewarmed spawns
 		for (int i = 0; i < spawnsPreWarm; i++) {
@@ -45,7 +43,7 @@ public class Respawn : MonoBehaviour
 	{
 		transform.Find ("Particle System").gameObject.SetActive (false);
 		GameObject glow = (GameObject)Instantiate (breakEffects, transform.position, Quaternion.identity);
-		glow.transform.Rotate (new Vector3 (270f, 0f, 0f));
+		glow.transform.Rotate (Vector3.up);
 		glow.transform.SetParent (transform);
 	}
 

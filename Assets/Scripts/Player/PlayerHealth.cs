@@ -9,7 +9,7 @@ public class PlayerHealth : MonoBehaviour
 	public float rateFire = 0.5f; 	// rate of fire (0-100) 
 	public float rateMissile = 2f;  // time between of missiles lunching (in seconds)
 	public float experience = 0f;	// experience for 0 on 1 level to 20000 on 20 level
-	public int difficulty = 1;		// 0 - Easy; 1 - Normal (default); 2 - Hard
+	public float difficulty = 1f;		// 0.5 - Easy; 1 - Normal (default); 2 - Hard
 	public bool gameStarted = false;
 
 	private static PlayerHealth _playerObj;
@@ -36,6 +36,7 @@ public class PlayerHealth : MonoBehaviour
 
 	public void TakeDamage (float amount)
 	{
+		amount *= difficulty;
 		// Decrement the player's health
 		health -= amount - (amount * armor * 0.6f) / 100f;
 	}

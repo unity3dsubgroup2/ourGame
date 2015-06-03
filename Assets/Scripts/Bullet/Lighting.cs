@@ -35,8 +35,6 @@ public class Lighting : MonoBehaviour
 		lineRenderers = gameObject.GetComponentsInChildren<LineRenderer> ();
 		//Set initial settings for renderers
 		for (int i = 0; i < lineRenderers.Length; i++) {
-			lineRenderers [i].castShadows = false;
-			lineRenderers [i].receiveShadows = false;
 			lineRenderers [i].material = lightningMaterial;
 			lineRenderers [i].SetVertexCount (sections);
 			lineRenderers [i].SetWidth (lineWidth, lineWidth);

@@ -7,7 +7,6 @@ public class BakeAI : MonoBehaviour
 	public GameObject explosion;
 
 	private Transform player;
-	private Animator myAnim;
 	private NavMeshAgent navMeshAgent;
 	private EnemyHealth myHealth;
 	private float speed = 3f;
@@ -20,7 +19,6 @@ public class BakeAI : MonoBehaviour
 	{
 		player = GameObject.FindGameObjectWithTag ("Player").transform;
 		weapon = transform.Find ("Weapon").transform;
-		myAnim = GetComponent<Animator> ();
 		navMeshAgent = GetComponent<NavMeshAgent> ();
 		myHealth = GetComponent<EnemyHealth> ();
 	}

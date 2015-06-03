@@ -7,7 +7,6 @@ public class Terminal : MonoBehaviour
 	public Renderer monitor;
 	AudioSource sound;
 	bool onCol = false;
-	bool offOn = true;
 	Color emitColor = Color.red;
 
 	void Start ()

@@ -14,6 +14,7 @@ public class EnemyHealth : MonoBehaviour
 
 	public void TakeDamage (float amount)
 	{
+		amount /= PlayerHealth.playerHealth.difficulty;
 		// Decrement health
 		if (isAlive) {
 			health -= amount - (amount * armor * 0.6f) / 100f;
