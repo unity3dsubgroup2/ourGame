@@ -6,9 +6,17 @@ public class mnuMain : MonoBehaviour
 {
 	public Canvas canvas;
 	public bool isShow;
+	public Canvas statusbar;
+	public bool isStatusShow;
 	public Button btnNew;
 	public Button btnDiff;
 	public Button btnMusic;
+	public Text txtHealth;
+	public Text txtArmor;
+	public Text txtScore;
+	float health = 0;
+	float armor = 0;
+	float score = 0;
 
 	void Start ()
 	{
@@ -26,6 +34,18 @@ public class mnuMain : MonoBehaviour
 			if (!isShow && canvas.enabled) {
 				ShowMenu (false);
 			}
+		}
+		if (health != PlayerHealth.playerHealth.health) {
+			health = PlayerHealth.playerHealth.health;
+			txtHealth.text = string.Format ("{0:0}", health);
+		}
+		if (armor != PlayerHealth.playerHealth.armor) {
+			armor = PlayerHealth.playerHealth.armor;
+			txtArmor.text = armor.ToString ();
+		}
+		if (score != PlayerHealth.playerHealth.experience) {
+			score = PlayerHealth.playerHealth.experience;
+			txtScore.text = score.ToString ();
 		}
 	}
 
@@ -74,10 +94,12 @@ public class mnuMain : MonoBehaviour
 	{
 		if (show) {
 			canvas.enabled = true;
+			statusbar.enabled = false;
 			isShow = true;
 			Time.timeScale = 0;
 		} else {
 			canvas.enabled = false;
+			statusbar.enabled = true;
 			isShow = false;
 			Time.timeScale = 1;
 		}

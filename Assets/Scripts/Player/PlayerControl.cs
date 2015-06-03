@@ -134,7 +134,7 @@ public class PlayerControl : MonoBehaviour
 		}
 	}
 
-	void OnCollisionStay (Collision collision)
+	void OnCollisionEnter (Collision collision)
 	{
 		if (collision.gameObject.tag == "Untagged" && !GetComponent<AudioSource> ().isPlaying) {
 			GetComponent<AudioSource> ().pitch = defaultPitch + Random.Range (-0.1f, 0.1f);
