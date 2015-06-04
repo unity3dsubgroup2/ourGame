@@ -12,6 +12,7 @@ public class mnuMain : MonoBehaviour
 	public Button btnDiff;
 	public Button btnMusic;
 	public Text txtHealth;
+	public Image imgHealth;
 	public Text txtArmor;
 	public Text txtScore;
 	float health = 0;
@@ -37,6 +38,8 @@ public class mnuMain : MonoBehaviour
 		}
 		if (health != PlayerHealth.playerHealth.health) {
 			health = PlayerHealth.playerHealth.health;
+			imgHealth.fillAmount = health / 100f;
+			imgHealth.color = Color.Lerp (Color.red, Color.green, imgHealth.fillAmount - 0.25f);
 			txtHealth.text = string.Format ("{0:0}", health);
 		}
 		if (armor != PlayerHealth.playerHealth.armor) {
