@@ -28,7 +28,7 @@ public class BakeAI : MonoBehaviour
 		if (isActive) {
 			if (myHealth.isAlive) {
 				navMeshAgent.speed = speed;
-		
+				// shot
 				float angle = Vector3.Angle (transform.forward, (player.position - transform.position));
 				if (angle < 15f && Vector3.Distance (transform.position, player.position) < myHealth.distanceToShot) {
 					if (shotTimer > myHealth.shotRate && myHealth.isAlive) {
