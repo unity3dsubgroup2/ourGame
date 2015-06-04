@@ -6,15 +6,18 @@ public class mnuMain : MonoBehaviour
 {
 	public Canvas canvas;
 	public bool isShow;
-	public Canvas statusbar;
-	public bool isStatusShow;
 	public Button btnNew;
 	public Button btnDiff;
 	public Button btnMusic;
+	public Canvas statusbar;
 	public Text txtHealth;
 	public Image imgHealth;
 	public Text txtArmor;
 	public Text txtScore;
+	public Canvas msgDialog;
+	public bool isDlgShow = false;
+	public Text txtInfo;
+	public Image imgInfo;
 	float health = 0;
 	float armor = 0;
 	float score = 0;
@@ -98,13 +101,34 @@ public class mnuMain : MonoBehaviour
 		if (show) {
 			canvas.enabled = true;
 			statusbar.enabled = false;
+			msgDialog.enabled = false;
 			isShow = true;
 			Time.timeScale = 0;
 		} else {
+			Time.timeScale = 1;
 			canvas.enabled = false;
 			statusbar.enabled = true;
+			if (isDlgShow) {
+				Time.timeScale = 0;
+				msgDialog.enabled = true;
+			}
 			isShow = false;
-			Time.timeScale = 1;
 		}
+	}
+
+	public void ShowMsgDialog (string txt, Sprite img)
+	{
+		txtInfo.text = txt;
+		imgInfo.sprite = img;
+		Time.timeScale = 0;
+		msgDialog.enabled = true;
+		isDlgShow = true;
+	}
+
+	public void CloseMsgDialog ()
+	{
+		msgDialog.enabled = false;
+		isDlgShow = false;
+		Time.timeScale = 1;
 	}
 }
