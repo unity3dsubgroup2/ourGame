@@ -91,8 +91,10 @@ public class mnuMain : MonoBehaviour
 		Text textObj = btnMusic.transform.Find ("Text").GetComponent<Text> ();
 		if (textObj.text == "Music: off") {
 			textObj.text = "Music: on";
+			transform.root.Find ("MusicBG").GetComponent<AudioSource> ().Play ();
 		} else {
 			textObj.text = "Music: off";
+			transform.root.Find ("MusicBG").GetComponent<AudioSource> ().Pause ();
 		}
 	}
 
