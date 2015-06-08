@@ -46,7 +46,7 @@ public class PlayerControl : MonoBehaviour
 	void Update ()
 	{
 		RaycastHit hitInfo;
-		raycastResult = Physics.Raycast (weapon1.transform.position, weapon1.forward, out hitInfo, Mathf.Infinity, layerMask);
+		raycastResult = Physics.Raycast (weapon1.transform.position, weapon1.forward, out hitInfo, 100f, layerMask);
 		// draw lazer
 		if (lazer != null && raycastResult) {
 			lazer.materials [0].mainTextureOffset += new Vector2 (Time.deltaTime * 0.1f, 0.0f);
