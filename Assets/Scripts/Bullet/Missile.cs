@@ -6,6 +6,7 @@ public class Missile : MonoBehaviour
 	public float amount = 200f;
 	public GameObject target;
 	public GameObject owner;
+	public GameObject explosion;
 
 	private Rigidbody myBody;
 	private float speed = 0.01f;
@@ -22,6 +23,7 @@ public class Missile : MonoBehaviour
 		if (target.gameObject != null) {
 			hitPoint = target.transform.position + new Vector3 (0f, 0.75f, 0f);
 		} else if (Vector3.Distance (transform.position, hitPoint) < 1f) { // if the target destroyed - move to last known position and selfdestroy
+			Destroy ((GameObject)Instantiate (explosion, new Vector3 (transform.position.x, 1.5f, transform.position.z), Quaternion.identity), 1f);
 			Destroy (gameObject);
 		}
 		speed += Time.deltaTime / 4f;
@@ -39,6 +41,7 @@ public class Missile : MonoBehaviour
 					other.GetComponent<EnemyHealth> ().TakeDamage (amount);
 				}
 			}
+			Destroy ((GameObject)Instantiate (explosion, new Vector3 (transform.position.x, 1.5f, transform.position.z), Quaternion.identity), 1f);
 			Destroy (gameObject);
 		}
 	}

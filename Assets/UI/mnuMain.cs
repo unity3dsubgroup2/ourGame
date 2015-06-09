@@ -47,11 +47,11 @@ public class mnuMain : MonoBehaviour
 		}
 		if (armor != PlayerHealth.playerHealth.armor) {
 			armor = PlayerHealth.playerHealth.armor;
-			txtArmor.text = armor.ToString ();
+			txtArmor.text = string.Format ("{0:0}", armor);
 		}
 		if (score != PlayerHealth.playerHealth.experience) {
 			score = PlayerHealth.playerHealth.experience;
-			txtScore.text = score.ToString ();
+			txtScore.text = string.Format ("{0:0}", score);
 		}
 	}
 
@@ -132,5 +132,14 @@ public class mnuMain : MonoBehaviour
 		msgDialog.enabled = false;
 		isDlgShow = false;
 		Time.timeScale = 1;
+	}
+
+	public void GameOver (bool win)
+	{
+		if (win) {
+			print ("Gongratulation. You WIN!!!");
+		} else {
+			print ("Game over. Try again.");
+		}
 	}
 }

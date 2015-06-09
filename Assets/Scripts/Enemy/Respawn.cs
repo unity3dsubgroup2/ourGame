@@ -7,6 +7,7 @@ public class Respawn : MonoBehaviour
 	public GameObject spawn;
 	public float prepareTime = 5f;
 	public int spawnsPreWarm = 3;
+	public int maxClones = 10;
 	public int reward = 20;
 	public GameObject cloneEffects;
 	public GameObject breakEffects;
@@ -15,6 +16,7 @@ public class Respawn : MonoBehaviour
 	bool isActive = false;
 	bool dead = false;
 	float timer = 0;
+	int clonesCount = 0;
 
 	void Start ()
 	{
@@ -54,15 +56,17 @@ public class Respawn : MonoBehaviour
 
 	void InstantiateSpawn ()
 	{
-		Vector3 spawnPoint = new Vector3 (transform.position.x + Random.Range (1f, 2f), 0f, transform.position.z + Random.Range (1f, 2f));
-		// show spawn effects (particle system)
-		if (cloneEffects != null) {
-			GameObject effectObj = (GameObject)Instantiate (cloneEffects, spawnPoint, Quaternion.identity);
-			Destroy (effectObj, 1.5f);
-		}
-		GameObject obj = (GameObject)Instantiate (spawn, spawnPoint, Quaternion.identity);
-		if (obj.GetComponent<AudioSource> () != null) { // if the object have walk sound - set random pitch offset
-			obj.GetComponent<AudioSource> ().pitch += Random.Range (-0.1f, 0.1f);
+		if (clonesCount < maxClones) {
+			Vector3 spawnPoint = new Vector3 (transform.position.x + Random.Range (1f, 2f), 0f, transform.position.z + Random.Range (1f, 2f));
+			// show spawn effects (particle system)
+			if (cloneEffects != null) {
+				Destroy ((GameObject)Instantiate (cloneEffects, spawnPoint, Quaternion.identity), 1.5f);
+			}
+			GameObject obj = (GameObject)Instantiate (spawn, spawnPoint, Quaternion.identity);
+			if (obj.GetComponent<AudioSource> () != null) { // if the object have walk sound - set random pitch offset
+				obj.GetComponent<AudioSource> ().pitch += Random.Range (-0.1f, 0.1f);
+			}
+			clonesCount++;
 		}
 	}
 }

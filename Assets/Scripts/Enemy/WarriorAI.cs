@@ -57,9 +57,8 @@ public class WarriorAI : MonoBehaviour
 					GetComponent<Patrolling> ().ResumePatrolling ();
 				}
 			} else {
-				GameObject objExplosion = (GameObject)Instantiate (
-					explosion, new Vector3 (transform.position.x, 1.5f, transform.position.z), Quaternion.identity);
-				Destroy (objExplosion, 1f);
+				Destroy ((GameObject)Instantiate (
+					explosion, new Vector3 (transform.position.x, 1.5f, transform.position.z), Quaternion.identity), 1f);
 				Destroy (gameObject);
 			}
 		}

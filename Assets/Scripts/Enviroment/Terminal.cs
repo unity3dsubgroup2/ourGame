@@ -16,7 +16,7 @@ public class Terminal : MonoBehaviour
 	
 	void Update ()
 	{
-		if (onCol && Input.GetKeyDown (KeyCode.Space)) {
+		if (onCol && (Input.GetKeyDown (KeyCode.Space) || Input.GetKeyDown (KeyCode.E))) {
 			door.GetComponent<DoorLight> ().Effects (!door.GetComponent<BoxCollider> ().enabled);
 			emitColor = (door.GetComponent<BoxCollider> ().enabled) ? Color.red : emitColor = Color.green;
 			sound.Play ();
