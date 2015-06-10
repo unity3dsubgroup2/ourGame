@@ -39,8 +39,9 @@ public class PlayerHealth : MonoBehaviour
 	{
 		amount *= difficulty;
 		// Decrement the player's health
-		health -= amount - (amount * armor * 0.6f) / 100f;
-		armor -= amount / 2f;
+		health -= amount * 0.75f - (amount * armor * 0.6f) / 100f;
+		armor = armor - (amount * (armor / 100f));
+		//	armor -= amount * 0.5f - (amount * 0.6f) / 100f;
 		if (armor < 0f)
 			armor = 0f;
 		if (health <= 0f)
@@ -54,7 +55,7 @@ public class PlayerHealth : MonoBehaviour
 		health += amount / 10f;
 		if (health > 100f)
 			health = 100f;
-		armor += amount * 2f / 10f;
+		armor += amount * 5f / 10f;
 		if (armor > 100f)
 			armor = 100f;
 	}

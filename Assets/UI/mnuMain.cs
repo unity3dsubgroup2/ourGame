@@ -101,11 +101,13 @@ public class mnuMain : MonoBehaviour
 	void ShowMenu (bool show)
 	{
 		if (show) {
-			canvas.enabled = true;
-			statusbar.enabled = false;
-			msgDialog.enabled = false;
-			isShow = true;
-			Time.timeScale = 0;
+			if (isActiveAndEnabled) { // Show menu only if MainMenu object is enabled
+				canvas.enabled = true;
+				statusbar.enabled = false;
+				msgDialog.enabled = false;
+				isShow = true;
+				Time.timeScale = 0;
+			}
 		} else {
 			Time.timeScale = 1;
 			canvas.enabled = false;
@@ -120,11 +122,13 @@ public class mnuMain : MonoBehaviour
 
 	public void ShowMsgDialog (string txt, Sprite img)
 	{
-		txtInfo.text = txt;
-		imgInfo.sprite = img;
-		Time.timeScale = 0;
-		msgDialog.enabled = true;
-		isDlgShow = true;
+		if (isActiveAndEnabled) { // only if the MainMenu object is enabled - show the MessageDialog
+			txtInfo.text = txt;
+			imgInfo.sprite = img;
+			Time.timeScale = 0;
+			msgDialog.enabled = true;
+			isDlgShow = true;
+		}
 	}
 
 	public void CloseMsgDialog ()

@@ -23,9 +23,9 @@ public class Patrolling : MonoBehaviour
 			NavMeshPath path = new NavMeshPath ();
 			do {
 				points [i] = spawnPosition + (new Vector3 (Random.Range (-radius, radius), 2.5f, Random.Range (-radius, radius)));
-				NavMesh.CalculatePath (transform.position, points [i], NavMesh.AllAreas, path); // TODO: change AllAreas to current area
+				NavMesh.CalculatePath (transform.position, points [i], NavMesh.AllAreas, path);
 				iterationsCount++;
-			} while (path.status != NavMeshPathStatus.PathComplete && iterationsCount < 10);
+			} while (path.status != NavMeshPathStatus.PathComplete && iterationsCount < 20);
 			iterationsCount = 0;
 		}
 		navAgent.SetDestination (points [currentPoint]);
@@ -33,8 +33,8 @@ public class Patrolling : MonoBehaviour
 
 	void Update ()
 	{
-		if (patrolling && navAgent.remainingDistance < 0.1f) { // if the Agent reach current checkpoint - get next one
-			currentPoint = (currentPoint < numberOfPoints - 1) ? currentPoint + 1 : 0;
+		if (patrolling && (navAgent.remainingDistance < 0.1f || navAgent.speed == 0f)) { // if the Agent reach current checkpoint - get next one
+			currentPoint = (currentPoint < numberOfPoints - 1) ? currentPoint + 1 : 0;  //after last checkpoint go to first
 			navAgent.SetDestination (points [currentPoint]);
 		}
 	}

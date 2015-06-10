@@ -26,7 +26,8 @@ public class DoorLight : MonoBehaviour
 	public void Effects (bool state)
 	{
 		door.enabled = state;
-		dsound.enabled = state;
+		if (dsound)
+			dsound.enabled = state;
 		GetComponent<BoxCollider> ().enabled = state;
 	}
 

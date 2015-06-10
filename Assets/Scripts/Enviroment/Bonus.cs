@@ -22,7 +22,6 @@ public class Bonus : MonoBehaviour
 			if (bonus == Bonuses.Weapon1 && !other.GetComponent<PlayerControl> ().isWeapon1Active) {
 				other.GetComponent<PlayerControl> ().isWeapon1Active = true;
 				txt = "Left Weapon activated";
-
 			}
 			if (bonus == Bonuses.Weapon2 && !other.GetComponent<PlayerControl> ().isWeapon2Active) {
 				other.GetComponent<PlayerControl> ().isWeapon2Active = true;

@@ -66,6 +66,8 @@ public class Respawn : MonoBehaviour
 			GameObject obj = (GameObject)Instantiate (spawn, spawnPoint, Quaternion.identity);
 			if (obj.GetComponent<AudioSource> () != null) { // if the object have walk sound - set random pitch offset
 				obj.GetComponent<AudioSource> ().pitch += Random.Range (-0.1f, 0.1f);
+				if (obj.GetComponent<NavMeshAgent> ())
+					obj.GetComponent<NavMeshAgent> ().avoidancePriority = clonesCount * 2;
 			}
 			clonesCount++;
 		}

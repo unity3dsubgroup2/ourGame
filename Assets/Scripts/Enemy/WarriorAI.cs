@@ -48,7 +48,7 @@ public class WarriorAI : MonoBehaviour
 				}
 				shotTimer += Time.deltaTime;
 				if (myAnim != null) {
-					myAnim.SetFloat ("Forward", 1f, 0.1f, Time.deltaTime);  // forward walk speed
+					myAnim.SetFloat ("Forward", navMeshAgent.speed, 0.1f, Time.deltaTime);  // forward walk speed
 				}
 				if (Vector3.Distance (transform.position, player.position) < myHealth.distanceToShot) {
 					GetComponent<Patrolling> ().patrolling = false;
