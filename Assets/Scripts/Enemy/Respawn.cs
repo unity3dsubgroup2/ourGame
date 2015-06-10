@@ -51,6 +51,7 @@ public class Respawn : MonoBehaviour
 
 	public void Activate ()
 	{
+		GetComponent<AudioSource> ().Play ();
 		isActive = true;
 	}
 

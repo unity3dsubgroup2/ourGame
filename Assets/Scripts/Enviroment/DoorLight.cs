@@ -14,7 +14,7 @@ public class DoorLight : MonoBehaviour
 		dlight = GetComponent<Light> ();
 	}
 
-	void Update ()
+	void FixedUpdate ()
 	{
 		if (gameObject.GetComponent<BoxCollider> ().enabled) {
 			emission = Mathf.PingPong (Time.time, 1.0f);
