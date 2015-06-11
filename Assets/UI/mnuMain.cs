@@ -14,6 +14,9 @@ public class mnuMain : MonoBehaviour
 	public Image imgHealth;
 	public Text txtArmor;
 	public Text txtScore;
+	public Image imgGun1;
+	public Image imgGun2;
+	public Image imgGun3;
 	public Canvas msgDialog;
 	public bool isDlgShow = false;
 	public Canvas helpDialog;
