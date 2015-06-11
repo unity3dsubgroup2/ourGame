@@ -48,7 +48,7 @@ public class PlayerControl : MonoBehaviour
 	{
 		if (PlayerHealth.playerHealth.isAlive) {
 			RaycastHit hitInfo;
-			raycastResult = Physics.Raycast (weapon1.transform.position, weapon1.forward, out hitInfo, 100f, layerMask);
+			raycastResult = Physics.Raycast (lazer.transform.position, weapon1.forward, out hitInfo, 100f, layerMask);
 			// draw lazer
 			if (lazer != null && raycastResult) {
 				lazer.materials [0].mainTextureOffset += new Vector2 (Time.deltaTime * 0.1f, 0.0f);
@@ -122,7 +122,6 @@ public class PlayerControl : MonoBehaviour
 
 	public void ReactivateWeapons ()
 	{
-		print (mainMenu.GetComponent<mnuMain> ().imgGun1.color);
 		if (isWeapon1Active) {
 			transform.Find ("Turret/Gun1").gameObject.SetActive (true);
 			mainMenu.GetComponent<mnuMain> ().imgGun1.color = new Color (0.863f, 0.51f, 0.275f, 1);
