@@ -16,6 +16,8 @@ public class mnuMain : MonoBehaviour
 	public Text txtScore;
 	public Canvas msgDialog;
 	public bool isDlgShow = false;
+	public Canvas helpDialog;
+	public bool isHelpShow = false;
 	public Text txtInfo;
 	public Image imgInfo;
 	float health = 0;
@@ -63,12 +65,15 @@ public class mnuMain : MonoBehaviour
 
 	public void OnNewGameClick ()
 	{
-		PlayerHealth.playerHealth.gameStarted = true;
-		Text textObj = btnNew.transform.Find ("Text").GetComponent<Text> ();
-		textObj.text = "Resume";
-		btnDiff.interactable = false;
-		btnDiff.transform.Find ("Text").GetComponent<Text> ().color = btnDiff.colors.disabledColor;
 		ShowMenu (false);
+		if (!PlayerHealth.playerHealth.gameStarted) {
+			ShowHelpDialog ();
+			Text textObj = btnNew.transform.Find ("Text").GetComponent<Text> ();
+			textObj.text = "Resume";
+			btnDiff.interactable = false;
+			btnDiff.transform.Find ("Text").GetComponent<Text> ().color = btnDiff.colors.disabledColor;
+			PlayerHealth.playerHealth.gameStarted = true;
+		}
 	}
 
 	public void OnDiffClick ()
@@ -105,6 +110,7 @@ public class mnuMain : MonoBehaviour
 				canvas.enabled = true;
 				statusbar.enabled = false;
 				msgDialog.enabled = false;
+				helpDialog.enabled = false;
 				isShow = true;
 				Time.timeScale = 0;
 			}
@@ -115,6 +121,10 @@ public class mnuMain : MonoBehaviour
 			if (isDlgShow) {
 				Time.timeScale = 0;
 				msgDialog.enabled = true;
+			}
+			if (isHelpShow) {
+				Time.timeScale = 0;
+				helpDialog.enabled = true;
 			}
 			isShow = false;
 		}
@@ -135,6 +145,22 @@ public class mnuMain : MonoBehaviour
 	{
 		msgDialog.enabled = false;
 		isDlgShow = false;
+		Time.timeScale = 1;
+	}
+
+	public void ShowHelpDialog ()
+	{
+		if (isActiveAndEnabled) { // only if the MainMenu object is enabled - show the MessageDialog
+			Time.timeScale = 0;
+			helpDialog.enabled = true;
+			isHelpShow = true;
+		}
+	}
+
+	public void CloseHelpDialog ()
+	{
+		helpDialog.enabled = false;
+		isHelpShow = false;
 		Time.timeScale = 1;
 	}
 
