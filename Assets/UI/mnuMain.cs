@@ -44,14 +44,14 @@ public class mnuMain : MonoBehaviour
 				ShowMenu (false);
 			}
 		}
-		if (health != PlayerHealth.playerHealth.health) {
-			health = PlayerHealth.playerHealth.health;
+		if (health != PlayerHealth.playerHealth.Health) {
+			health = PlayerHealth.playerHealth.Health;
 			imgHealth.fillAmount = health / 100f;
 			imgHealth.color = Color.Lerp (Color.red, Color.green, imgHealth.fillAmount - 0.25f);
 			txtHealth.text = string.Format ("{0:0}", health);
 		}
-		if (armor != PlayerHealth.playerHealth.armor) {
-			armor = PlayerHealth.playerHealth.armor;
+		if (armor != PlayerHealth.playerHealth.Armor) {
+			armor = PlayerHealth.playerHealth.Armor;
 			txtArmor.text = string.Format ("{0:0}", armor);
 		}
 		if (score != PlayerHealth.playerHealth.experience) {

@@ -19,11 +19,15 @@ public class Terminal : MonoBehaviour
 		if (onCol && (Input.GetKeyDown (KeyCode.Space) || Input.GetKeyDown (KeyCode.E))) {
 			door.GetComponent<DoorLight> ().Effects (!door.GetComponent<BoxCollider> ().enabled);
 			emitColor = (door.GetComponent<BoxCollider> ().enabled) ? Color.red : emitColor = Color.green;
+			monitor.material.SetColor ("_EmissionColor", emitColor);
 			sound.Play ();
 		}
-		if (monitor) {
+	}
+
+	void FixedUpdate ()
+	{
+		if (monitor && monitor.GetComponent<MeshRenderer> ().isVisible) {
 			monitor.material.mainTextureOffset += new Vector2 (Time.deltaTime * 0.1f, 0.0f);
-			monitor.material.SetColor ("_EmissionColor", emitColor);
 		}
 	}
 

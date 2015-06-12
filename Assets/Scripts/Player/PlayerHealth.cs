@@ -4,8 +4,34 @@ using System.Collections;
 public class PlayerHealth : MonoBehaviour
 {
 	public float health = 100f;		// health (0-100)
-	public bool isAlive = true;
+	public float Health {
+		get {
+			return health;
+		}
+		set {
+			health = value;
+			if (health > 100f)
+				health = 100f;
+			if (health < 0f)
+				health = 0f;
+			if (health <= 0f)
+				isAlive = false;
+		}
+	}
 	public float armor = 0f;				// armor (0-100) 100 block 60% damage
+	public float Armor {
+		get {
+			return armor;
+		}
+		set {
+			armor = value;
+			if (armor > 100)
+				armor = 100;
+			if (armor < 0)
+				armor = 0;
+		}
+	}
+	public bool isAlive = true;
 	public float damage = 0f;		// damage (0-100)
 	public float rateFire = 0.5f; 	// rate of fire (0-100) 
 	public float rateMissile = 2f;  // time between of missiles lunching (in seconds)
@@ -39,25 +65,13 @@ public class PlayerHealth : MonoBehaviour
 	{
 		amount *= difficulty;
 		// Decrement the player's health
-		health -= amount * 0.75f - (amount * armor * 0.6f) / 100f;
-		armor = armor - (amount * (armor / 100f));
-		//	armor -= amount * 0.5f - (amount * 0.6f) / 100f;
-		if (armor < 0f)
-			armor = 0f;
-		if (health <= 0f)
-			isAlive = false;
+		Health -= amount * 0.75f - (amount * Armor * 0.6f) / 100f;
+		Armor -= amount * (Armor / 100f);
 	}
 
 	public void GetReward (float amount)
 	{
 		// get reward points if kill the enemy
 		experience += amount;
-		health += amount / 10f;
-		if (health > 100f)
-			health = 100f;
-		armor += amount * 5f / 10f;
-		if (armor > 100f)
-			armor = 100f;
 	}
-
 }
