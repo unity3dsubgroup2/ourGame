@@ -30,7 +30,7 @@ public class PlayerControl : MonoBehaviour
 
 	void Start ()
 	{
-		layerMask = ~LayerMask.GetMask ("Ignore Raycast");
+		layerMask = ~(LayerMask.GetMask ("Ignore Raycast") | LayerMask.GetMask ("Player"));
 		weapon1 = transform.Find ("Turret/Gun1/Weapon").transform;
 		weapon2 = transform.Find ("Turret/Gun2/Weapon").transform;
 		weaponMissile = transform.Find ("Turret/MissileSystem/Weapon").transform;
@@ -43,7 +43,13 @@ public class PlayerControl : MonoBehaviour
 		lazer.SetVertexCount (2);
 		defaultPitch = GetComponent<AudioSource> ().pitch;
 	}
-	
+
+	void FixedUpdate ()
+	{
+		lazer.materials [0].mainTextureOffset += new Vector2 (Time.deltaTime * 0.1f, 0.0f);
+		lazer.materials [0].SetTextureOffset ("_NoiseTex", new Vector2 (-Time.time, 0.0f));
+	}
+
 	void Update ()
 	{
 		if (PlayerHealth.playerHealth.isAlive) {
@@ -51,15 +57,11 @@ public class PlayerControl : MonoBehaviour
 			raycastResult = Physics.Raycast (lazer.transform.position, weapon1.forward, out hitInfo, 100f, layerMask);
 			// draw lazer
 			if (lazer != null && raycastResult) {
-				lazer.materials [0].mainTextureOffset += new Vector2 (Time.deltaTime * 0.1f, 0.0f);
-				lazer.materials [0].SetTextureOffset ("_NoiseTex", new Vector2 (-Time.time, 0.0f));
 				lazer.SetPosition (0, lazer.transform.position);
 				lazer.SetPosition (1, hitInfo.point);
 			} else {
-				lazer.materials [0].mainTextureOffset += new Vector2 (Time.deltaTime * 0.1f, 0.0f);
-				lazer.materials [0].SetTextureOffset ("_NoiseTex", new Vector2 (-Time.time, 0.0f));
 				lazer.SetPosition (0, lazer.transform.position);
-				lazer.SetPosition (1, lazer.transform.position);
+				lazer.SetPosition (1, lazer.transform.position + weapon1.forward * 100f);
 			}
 			// shot
 			if (Input.GetMouseButton (0)) {
