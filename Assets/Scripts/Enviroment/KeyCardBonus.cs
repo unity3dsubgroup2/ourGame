@@ -35,10 +35,10 @@ public class KeyCardBonus : MonoBehaviour
 		if (other.tag == "Player") {
 			switch (bonusType) {
 			case Bonuses.Health:
-				PlayerHealth.playerHealth.Health += amount;
+				PlayerHealth.playerHealth.Health += amount / PlayerHealth.playerHealth.difficulty;
 				break;
 			case Bonuses.Armor:
-				PlayerHealth.playerHealth.Armor += amount;
+				PlayerHealth.playerHealth.Armor += amount / PlayerHealth.playerHealth.difficulty;
 				break;
 			case Bonuses.Key:
 				break;
