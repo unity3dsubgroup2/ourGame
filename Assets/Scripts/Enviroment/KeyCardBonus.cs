@@ -44,7 +44,10 @@ public class KeyCardBonus : MonoBehaviour
 				PlayerHealth.playerHealth.hasKey = true;
 				break;
 			}
-			Destroy (gameObject);
+			GetComponent<AudioSource> ().Play ();
+			mesh.SetActive (false);
+			GetComponent<SphereCollider> ().enabled = false;
+			Destroy (gameObject, 2f);
 		}
 	}
 }
