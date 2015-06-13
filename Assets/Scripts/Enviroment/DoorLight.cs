@@ -16,7 +16,7 @@ public class DoorLight : MonoBehaviour
 
 	void FixedUpdate ()
 	{
-		if (gameObject.GetComponent<BoxCollider> ().enabled) {
+		if (gameObject.GetComponent<BoxCollider> ().enabled && door.GetComponent<Renderer> ().isVisible) {
 			emission = Mathf.PingPong (Time.time, 1.0f);
 			dlight.GetComponent<Light> ().color = new Color (emission, 0, 0);
 			door.material.SetColor ("_EmissionColor", new Color (emission, 0, 0));

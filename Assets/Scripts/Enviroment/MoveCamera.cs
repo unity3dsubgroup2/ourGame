@@ -26,7 +26,6 @@ public class MoveCamera : MonoBehaviour
 	
 	void FixedUpdate ()
 	{
-		
 		// additional ofset
 		float maxHalf = Mathf.Max (Screen.width, Screen.height) / 2f;
 		addOfset = Input.mousePosition - new Vector3 (Screen.width / 2f, Screen.height / 2f, Input.mousePosition.z);
@@ -37,20 +36,5 @@ public class MoveCamera : MonoBehaviour
 		// smooth move cam to new position
 		newCamPosition = Player.position + camPosition + addOfset * 2f;
 		camContainer.position = Vector3.Lerp (camContainer.position, newCamPosition, Time.deltaTime * Smooth);
-
-
-		// rotate cam
-		
-		//	relPlayerPosition = Vector3.Scale (Player.forward, new Vector3 (1, 0, 1)).normalized;
-		//	Quaternion camRotation = Quaternion.LookRotation (relPlayerPosition);
-		//	camContainer.rotation = Quaternion.Lerp (camContainer.rotation, camRotation, Smooth * Time.deltaTime);
-		
-		/*
-		m_CamForward = Vector3.Scale(Player.forward, new Vector3(1, 0, 1)).normalized;
-
-		relPlayerPosition = Player.position - transform.position;
-		Quaternion camRotation = Quaternion.LookRotation (relPlayerPosition, Vector3.up);
-		transform.rotation = Quaternion.Lerp (transform.rotation, camRotation, Smooth * Time.deltaTime);
-		*/
 	}
 }

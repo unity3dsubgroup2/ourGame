@@ -5,6 +5,9 @@ public class Terminal : MonoBehaviour
 {
 	public GameObject door;
 	public Renderer monitor;
+	public bool needKey = false;
+	public AudioClip okSound;
+	public AudioClip notOkSound;
 	AudioSource sound;
 	bool onCol = false;
 	Color emitColor = Color.red;
@@ -17,10 +20,16 @@ public class Terminal : MonoBehaviour
 	void Update ()
 	{
 		if (onCol && (Input.GetKeyDown (KeyCode.Space) || Input.GetKeyDown (KeyCode.E))) {
-			door.GetComponent<DoorLight> ().Effects (!door.GetComponent<BoxCollider> ().enabled);
-			emitColor = (door.GetComponent<BoxCollider> ().enabled) ? Color.red : emitColor = Color.green;
-			monitor.material.SetColor ("_EmissionColor", emitColor);
-			sound.Play ();
+			if (!needKey || PlayerHealth.playerHealth.hasKey) {
+				door.GetComponent<DoorLight> ().Effects (!door.GetComponent<BoxCollider> ().enabled);
+				emitColor = (door.GetComponent<BoxCollider> ().enabled) ? Color.red : emitColor = Color.green;
+				monitor.material.SetColor ("_EmissionColor", emitColor);
+				sound.clip = okSound;
+				sound.Play ();
+			} else {
+				sound.clip = notOkSound;
+				sound.Play ();
+			}
 		}
 	}
 

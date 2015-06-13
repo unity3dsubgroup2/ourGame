@@ -37,6 +37,7 @@ public class PlayerHealth : MonoBehaviour
 	public float rateMissile = 2f;  // time between of missiles lunching (in seconds)
 	public float experience = 0f;	// experience for 0 on 1 level to 20000 on 20 level
 	public float difficulty = 1f;		// 0.5 - Easy; 1 - Normal (default); 2 - Hard
+	public bool hasKey = false;
 	public bool gameStarted = false;
 
 	private static PlayerHealth _playerObj;

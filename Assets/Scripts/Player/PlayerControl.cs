@@ -133,7 +133,7 @@ public class PlayerControl : MonoBehaviour
 		}
 		if (isWeapon2Active) {
 			transform.Find ("Turret/Gun2").gameObject.SetActive (true);
-			mainMenu.GetComponent<mnuMain> ().imgGun1.color = new Color (0.863f, 0.51f, 0.275f, 1);
+			mainMenu.GetComponent<mnuMain> ().imgGun2.color = new Color (0.863f, 0.51f, 0.275f, 1);
 		} else {
 			transform.Find ("Turret/Gun2").gameObject.SetActive (false);
 			mainMenu.GetComponent<mnuMain> ().imgGun2.color = new Color (1, 1, 1, 0.294f);
@@ -141,7 +141,7 @@ public class PlayerControl : MonoBehaviour
 		}
 		if (isMissileActive) {
 			transform.Find ("Turret/MissileSystem").gameObject.SetActive (true);
-			mainMenu.GetComponent<mnuMain> ().imgGun1.color = new Color (0.863f, 0.51f, 0.275f, 1);
+			mainMenu.GetComponent<mnuMain> ().imgGun3.color = new Color (0.863f, 0.51f, 0.275f, 1);
 		} else {
 			transform.Find ("Turret/MissileSystem").gameObject.SetActive (false);
 			mainMenu.GetComponent<mnuMain> ().imgGun3.color = new Color (1, 1, 1, 0.294f);

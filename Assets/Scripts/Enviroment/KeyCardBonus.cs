@@ -41,6 +41,7 @@ public class KeyCardBonus : MonoBehaviour
 				PlayerHealth.playerHealth.Armor += amount / PlayerHealth.playerHealth.difficulty;
 				break;
 			case Bonuses.Key:
+				PlayerHealth.playerHealth.hasKey = true;
 				break;
 			}
 			Destroy (gameObject);
