@@ -9,7 +9,7 @@ public class BakeAI : MonoBehaviour
 	private Transform player;
 	private NavMeshAgent navMeshAgent;
 	private EnemyHealth myHealth;
-	private float speed = 3f;
+	private float speed = 2f;
 	private Transform weapon;
 	private bool isActive = true;
 	
@@ -27,13 +27,12 @@ public class BakeAI : MonoBehaviour
 	{
 		if (isActive) {
 			if (myHealth.isAlive) {
-				navMeshAgent.speed = speed;
+				navMeshAgent.speed = speed / PlayerHealth.playerHealth.difficulty;
 				// shot
 				float angle = Vector3.Angle (transform.forward, (player.position - transform.position));
 				if (angle < 15f && Vector3.Distance (transform.position, player.position) < myHealth.distanceToShot) {
 					if (shotTimer > myHealth.shotRate && myHealth.isAlive) {
 						Shot ();
-						shotTimer = 0;
 					}
 				}
 				shotTimer += Time.deltaTime;
@@ -41,9 +40,7 @@ public class BakeAI : MonoBehaviour
 					navMeshAgent.SetDestination (player.position);
 				}
 			} else {
-				GameObject objExplosion = (GameObject)Instantiate (
-					explosion, new Vector3 (transform.position.x, 1.5f, transform.position.z), Quaternion.identity);
-				Destroy (objExplosion, 1f);
+				Destroy ((GameObject)Instantiate (explosion, new Vector3 (transform.position.x, 1.5f, transform.position.z), Quaternion.identity), 1f);
 				Destroy (gameObject);
 			}
 		}
@@ -51,6 +48,7 @@ public class BakeAI : MonoBehaviour
 
 	void Shot ()
 	{
+		shotTimer = 0;
 		GameObject shot = (GameObject)Instantiate (bullet, weapon.position, Quaternion.identity);
 		shot.GetComponent<Lighting> ().amount = myHealth.damage;
 		shot.GetComponent<Lighting> ().owner = gameObject;

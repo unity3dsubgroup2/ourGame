@@ -10,7 +10,7 @@ public class WarriorAI : MonoBehaviour
 	private Animator myAnim;
 	private NavMeshAgent navMeshAgent;
 	private EnemyHealth myHealth;
-	private float speed = 3f;
+	float speed = 1f;
 	private Transform weapon;
 	private bool isActive = true;
 	
@@ -30,20 +30,21 @@ public class WarriorAI : MonoBehaviour
 	{
 		if (isActive) {
 			if (myHealth.isAlive) {
-				navMeshAgent.speed = speed;
+				navMeshAgent.speed = speed / PlayerHealth.playerHealth.difficulty;
 		
 				float angle = Vector3.Angle (transform.forward, (player.position - transform.position));
 				if (angle < 15f && Vector3.Distance (transform.position, player.position) < myHealth.distanceToShot) {
 					if (shotTimer > myHealth.shotRate && myHealth.isAlive) {
 						if (myAnim != null) {
 							myAnim.SetBool ("EnemyInSight", true);
+							speed = 0;
 						}
 						Shot ();
-						shotTimer = 0;
 					}
 				} else {
 					if (myAnim != null) {
 						myAnim.SetBool ("EnemyInSight", false);
+						speed = 1f;
 					}
 				}
 				shotTimer += Time.deltaTime;
@@ -67,11 +68,12 @@ public class WarriorAI : MonoBehaviour
 
 	void OnAnimatorMove ()
 	{
-		speed = myAnim.GetFloat ("ForwardSpeed");
+//		speed = myAnim.GetFloat ("ForwardSpeed");
 	}
 
 	void Shot ()
 	{
+		shotTimer = 0;
 		weapon.GetComponent<AudioSource> ().Play ();
 		GameObject shot = (GameObject)Instantiate (bullet, weapon.position, Quaternion.identity);
 		shot.GetComponent<Bullet> ().amount = myHealth.damage;

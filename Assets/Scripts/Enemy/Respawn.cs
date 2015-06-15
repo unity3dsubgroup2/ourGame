@@ -69,6 +69,8 @@ public class Respawn : MonoBehaviour
 				obj.GetComponent<AudioSource> ().pitch += Random.Range (-0.1f, 0.1f);
 				if (obj.GetComponent<NavMeshAgent> ())
 					obj.GetComponent<NavMeshAgent> ().avoidancePriority = clonesCount * 2;
+				if (obj.GetComponent<Patrolling> ())
+					obj.GetComponent<Patrolling> ().patrolling = true;
 			}
 			clonesCount++;
 		}
