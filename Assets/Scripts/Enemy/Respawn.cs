@@ -47,6 +47,7 @@ public class Respawn : MonoBehaviour
 		GameObject glow = (GameObject)Instantiate (breakEffects, transform.position, Quaternion.identity);
 		glow.transform.Rotate (Vector3.up);
 		glow.transform.SetParent (transform);
+		GetComponent<CapsuleCollider> ().enabled = false;
 	}
 
 	public void Activate ()
