@@ -54,7 +54,8 @@ public class WarriorAI : MonoBehaviour
 					GetComponent<Patrolling> ().patrolling = false;
 					navMeshAgent.SetDestination (player.position);
 				} else {
-					GetComponent<Patrolling> ().ResumePatrolling ();
+					if (!GetComponent<Patrolling> ().patrolling)
+						GetComponent<Patrolling> ().ResumePatrolling ();
 				}
 			} else {
 				Destroy ((GameObject)Instantiate (

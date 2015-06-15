@@ -23,6 +23,11 @@ public class mnuMain : MonoBehaviour
 	public bool isHelpShow = false;
 	public Text txtInfo;
 	public Image imgInfo;
+
+	public Canvas gameOverDialog;
+	public bool isGameOverShow = false;
+
+	
 	float health = 0;
 	float armor = 0;
 	float score = 0;
@@ -34,7 +39,7 @@ public class mnuMain : MonoBehaviour
 	
 	void Update ()
 	{
-		if (Input.GetKeyDown (KeyCode.Escape)) {
+		if (Input.GetKeyDown (KeyCode.Escape) && !isGameOverShow) {
 			if (PlayerHealth.playerHealth.gameStarted)
 				isShow = !isShow;
 			if (isShow && !canvas.enabled) {
@@ -114,6 +119,7 @@ public class mnuMain : MonoBehaviour
 				statusbar.enabled = false;
 				msgDialog.enabled = false;
 				helpDialog.enabled = false;
+				gameOverDialog.enabled = false;
 				isShow = true;
 				Time.timeScale = 0;
 			}
@@ -169,10 +175,22 @@ public class mnuMain : MonoBehaviour
 
 	public void GameOver (bool win)
 	{
+		transform.root.Find ("/player").GetComponent<AudioListener> ().enabled = false;
+		gameOverDialog.enabled = true;
+		isGameOverShow = true;
+		Time.timeScale = 0;
 		if (win) {
-			print ("Gongratulation. You WIN!!!");
+			gameOverDialog.transform.Find ("Win").GetComponent<Image> ().enabled = true;
+			gameOverDialog.transform.Find ("Lost").GetComponent<Image> ().enabled = false;
 		} else {
-			print ("Game over. Try again.");
+			gameOverDialog.transform.Find ("Win").GetComponent<Image> ().enabled = false;
+			gameOverDialog.transform.Find ("Lost").GetComponent<Image> ().enabled = true;
 		}
+	}
+
+	public void CloseGameOver ()
+	{
+		transform.root.Find ("/player").GetComponent<AudioListener> ().enabled = true;
+		PlayerHealth.playerHealth.RestartLevel ();
 	}
 }

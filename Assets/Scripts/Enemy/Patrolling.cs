@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Patrolling : MonoBehaviour
 {
-	public float radius = 25f;
+	public float radius = 15f;
 	public int numberOfPoints = 5;
 	public bool patrolling = true;
 
@@ -25,7 +25,7 @@ public class Patrolling : MonoBehaviour
 				points [i] = spawnPosition + (new Vector3 (Random.Range (-radius, radius), 2.5f, Random.Range (-radius, radius)));
 				NavMesh.CalculatePath (transform.position, points [i], NavMesh.AllAreas, path);
 				iterationsCount++;
-			} while (path.status != NavMeshPathStatus.PathComplete && iterationsCount < 20);
+			} while (path.status != NavMeshPathStatus.PathComplete && iterationsCount < 50);
 			iterationsCount = 0;
 		}
 		navAgent.SetDestination (points [currentPoint]);

@@ -18,7 +18,7 @@ public class PlayerHealth : MonoBehaviour
 				isAlive = false;
 		}
 	}
-	public float armor = 0f;				// armor (0-100) 100 block 60% damage
+	public float armor = 100f;				// armor (0-100) 100 block 60% damage
 	public float Armor {
 		get {
 			return armor;
@@ -39,6 +39,7 @@ public class PlayerHealth : MonoBehaviour
 	public float difficulty = 1f;		// 0.5 - Easy; 1 - Normal (default); 2 - Hard
 	public bool hasKey = false;
 	public bool gameStarted = false;
+	Vector3 startPoint;
 
 	private static PlayerHealth _playerObj;
 
@@ -56,6 +57,7 @@ public class PlayerHealth : MonoBehaviour
 	{
 		if (_playerObj == null) {
 			_playerObj = this;
+			startPoint = transform.position;
 			DontDestroyOnLoad (_playerObj.gameObject);
 		} else if (this != _playerObj) {
 			Destroy (this.gameObject);
@@ -74,5 +76,18 @@ public class PlayerHealth : MonoBehaviour
 	{
 		// get reward points if kill the enemy
 		experience += amount;
+	}
+
+	public void RestartLevel ()
+	{
+		gameStarted = false;
+		health = 100f;
+		armor = 100f;
+		experience = 0f;
+		difficulty = 1f;
+		hasKey = false;
+		isAlive = true;
+		transform.position = startPoint;
+		Application.LoadLevel (0);
 	}
 }
