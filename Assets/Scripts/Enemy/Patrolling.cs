@@ -8,8 +8,8 @@ public class Patrolling : MonoBehaviour
 	public bool patrolling = true;
 
 	Vector3 spawnPosition;
-	Vector3[] points;
-	int currentPoint = 0;
+	public Vector3[] points;
+	public int currentPoint = 0;
 	int iterationsCount = 0;
 	NavMeshAgent navAgent;
 	
@@ -33,7 +33,7 @@ public class Patrolling : MonoBehaviour
 
 	void Update ()
 	{
-		if (patrolling && (navAgent.remainingDistance <= 1f)) { // if the Agent reach current checkpoint - get next one
+		if (patrolling && (navAgent.remainingDistance <= 2.1f)) { // if the Agent reach current checkpoint - get next one
 			currentPoint = (currentPoint < numberOfPoints - 1) ? currentPoint + 1 : 0;  //after last checkpoint go to first
 			navAgent.SetDestination (points [currentPoint]);
 		}

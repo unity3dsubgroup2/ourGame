@@ -11,7 +11,7 @@ public class KeyCardBonus : MonoBehaviour
 	}
 	public Bonuses bonusType;
 	public GameObject[] meshes = new GameObject[3];
-	public float RotateSpeed = 100f;
+	public float RotateSpeed = 200f;
 	public float amount = 5f;
 	GameObject mesh;
 
@@ -20,7 +20,8 @@ public class KeyCardBonus : MonoBehaviour
 		mesh = (GameObject)Instantiate (meshes [(int)bonusType], Vector3.zero, Quaternion.identity);
 		mesh.transform.parent = transform;
 		mesh.transform.localPosition = Vector3.zero;
-		mesh.transform.Rotate (40f, 0f, 0f, Space.World);
+		mesh.transform.localScale = new Vector3 (20, 20, 20);
+		mesh.transform.Rotate (10f, 10f, 10f, Space.World);
 	}
 	
 	void FixedUpdate ()

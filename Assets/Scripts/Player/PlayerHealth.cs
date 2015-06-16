@@ -88,6 +88,9 @@ public class PlayerHealth : MonoBehaviour
 		hasKey = false;
 		isAlive = true;
 		transform.position = startPoint;
+		GetComponent<PlayerControl> ().isWeapon1Active = false;
+		GetComponent<PlayerControl> ().isWeapon2Active = false;
+		GetComponent<PlayerControl> ().isMissileActive = false;
 		Application.LoadLevel (0);
 	}
 }
