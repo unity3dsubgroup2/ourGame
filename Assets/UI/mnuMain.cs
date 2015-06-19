@@ -190,7 +190,8 @@ public class mnuMain : MonoBehaviour
 
 	public void CloseGameOver ()
 	{
-		transform.root.Find ("/player").GetComponent<AudioListener> ().enabled = true;
-		PlayerHealth.playerHealth.RestartLevel ();
+//		transform.root.Find ("/player").GetComponent<AudioListener> ().enabled = true;
+//		PlayerHealth.playerHealth.RestartLevel ();
+		Application.Quit ();
 	}
 }
